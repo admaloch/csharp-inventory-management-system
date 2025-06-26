@@ -42,22 +42,22 @@
             this.AddProductBtn = new System.Windows.Forms.Button();
             this.ModifyProductBtn = new System.Windows.Forms.Button();
             this.DeleteProductBtn = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.PartsDataGridView = new System.Windows.Forms.DataGridView();
+            this.ProductsDataGridView = new System.Windows.Forms.DataGridView();
             this.PartID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PartName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PartInventory = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PartPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MinPart = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MaxPart = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.ProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductInventory = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductMin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductMax = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PartsDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ProductsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -147,6 +147,7 @@
             this.DeletePartBtn.TabIndex = 11;
             this.DeletePartBtn.Text = "Delete";
             this.DeletePartBtn.UseVisualStyleBackColor = false;
+            this.DeletePartBtn.Click += new System.EventHandler(this.DeletePartBtn_Click);
             // 
             // ModifyPartBtn
             // 
@@ -207,131 +208,149 @@
             this.DeleteProductBtn.Text = "Delete";
             this.DeleteProductBtn.UseVisualStyleBackColor = false;
             // 
-            // dataGridView1
+            // PartsDataGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.PartsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.PartsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.PartID,
             this.PartName,
             this.PartInventory,
             this.PartPrice,
             this.MinPart,
             this.MaxPart});
-            this.dataGridView1.Location = new System.Drawing.Point(52, 265);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 82;
-            this.dataGridView1.RowTemplate.Height = 33;
-            this.dataGridView1.Size = new System.Drawing.Size(884, 477);
-            this.dataGridView1.TabIndex = 17;
+            this.PartsDataGridView.Location = new System.Drawing.Point(52, 265);
+            this.PartsDataGridView.MultiSelect = false;
+            this.PartsDataGridView.Name = "PartsDataGridView";
+            this.PartsDataGridView.RowHeadersVisible = false;
+            this.PartsDataGridView.RowHeadersWidth = 82;
+            this.PartsDataGridView.RowTemplate.Height = 33;
+            this.PartsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.PartsDataGridView.Size = new System.Drawing.Size(884, 477);
+            this.PartsDataGridView.TabIndex = 17;
             // 
-            // PartID
+            // ProductsDataGridView
             // 
-            this.PartID.HeaderText = "Part ID";
-            this.PartID.MinimumWidth = 10;
-            this.PartID.Name = "PartID";
-            this.PartID.Width = 200;
-            // 
-            // PartName
-            // 
-            this.PartName.HeaderText = "Part Name";
-            this.PartName.MinimumWidth = 10;
-            this.PartName.Name = "PartName";
-            this.PartName.Width = 200;
-            // 
-            // PartInventory
-            // 
-            this.PartInventory.HeaderText = "Inventory";
-            this.PartInventory.MinimumWidth = 10;
-            this.PartInventory.Name = "PartInventory";
-            this.PartInventory.Width = 200;
-            // 
-            // PartPrice
-            // 
-            this.PartPrice.HeaderText = "Price";
-            this.PartPrice.MinimumWidth = 10;
-            this.PartPrice.Name = "PartPrice";
-            this.PartPrice.Width = 200;
-            // 
-            // MinPart
-            // 
-            this.MinPart.HeaderText = "Min";
-            this.MinPart.MinimumWidth = 10;
-            this.MinPart.Name = "MinPart";
-            this.MinPart.Width = 200;
-            // 
-            // MaxPart
-            // 
-            this.MaxPart.HeaderText = "Max";
-            this.MaxPart.MinimumWidth = 10;
-            this.MaxPart.Name = "MaxPart";
-            this.MaxPart.Width = 200;
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ProductsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ProductsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ProductID,
             this.ProductName,
             this.ProductInventory,
             this.ProductPrice,
             this.ProductMin,
             this.ProductMax});
-            this.dataGridView2.Location = new System.Drawing.Point(1037, 265);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersWidth = 82;
-            this.dataGridView2.RowTemplate.Height = 33;
-            this.dataGridView2.Size = new System.Drawing.Size(925, 477);
-            this.dataGridView2.TabIndex = 18;
+            this.ProductsDataGridView.Location = new System.Drawing.Point(1037, 265);
+            this.ProductsDataGridView.MultiSelect = false;
+            this.ProductsDataGridView.Name = "ProductsDataGridView";
+            this.ProductsDataGridView.RowHeadersVisible = false;
+            this.ProductsDataGridView.RowHeadersWidth = 82;
+            this.ProductsDataGridView.RowTemplate.Height = 33;
+            this.ProductsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.ProductsDataGridView.Size = new System.Drawing.Size(925, 477);
+            this.ProductsDataGridView.TabIndex = 18;
+            // 
+            // PartID
+            // 
+            this.PartID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.PartID.HeaderText = "Part ID";
+            this.PartID.MinimumWidth = 10;
+            this.PartID.Name = "PartID";
+            this.PartID.Width = 122;
+            // 
+            // PartName
+            // 
+            this.PartName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.PartName.HeaderText = "Part Name";
+            this.PartName.MinimumWidth = 10;
+            this.PartName.Name = "PartName";
+            this.PartName.Width = 158;
+            // 
+            // PartInventory
+            // 
+            this.PartInventory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.PartInventory.HeaderText = "Inventory";
+            this.PartInventory.MinimumWidth = 10;
+            this.PartInventory.Name = "PartInventory";
+            this.PartInventory.Width = 145;
+            // 
+            // PartPrice
+            // 
+            this.PartPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.PartPrice.HeaderText = "Price";
+            this.PartPrice.MinimumWidth = 10;
+            this.PartPrice.Name = "PartPrice";
+            this.PartPrice.Width = 106;
+            // 
+            // MinPart
+            // 
+            this.MinPart.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.MinPart.HeaderText = "Min";
+            this.MinPart.MinimumWidth = 10;
+            this.MinPart.Name = "MinPart";
+            this.MinPart.Width = 92;
+            // 
+            // MaxPart
+            // 
+            this.MaxPart.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.MaxPart.HeaderText = "Max";
+            this.MaxPart.MinimumWidth = 10;
+            this.MaxPart.Name = "MaxPart";
+            this.MaxPart.Width = 98;
             // 
             // ProductID
             // 
+            this.ProductID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.ProductID.HeaderText = "Product ID";
             this.ProductID.MinimumWidth = 10;
             this.ProductID.Name = "ProductID";
-            this.ProductID.Width = 200;
+            this.ProductID.Width = 157;
             // 
             // ProductName
             // 
+            this.ProductName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.ProductName.HeaderText = "Product Name";
             this.ProductName.MinimumWidth = 10;
             this.ProductName.Name = "ProductName";
-            this.ProductName.Width = 200;
+            this.ProductName.Width = 193;
             // 
             // ProductInventory
             // 
+            this.ProductInventory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.ProductInventory.HeaderText = "Product Inventory";
             this.ProductInventory.MinimumWidth = 10;
             this.ProductInventory.Name = "ProductInventory";
-            this.ProductInventory.Width = 200;
+            this.ProductInventory.Width = 207;
             // 
             // ProductPrice
             // 
+            this.ProductPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.ProductPrice.HeaderText = "Product Price";
             this.ProductPrice.MinimumWidth = 10;
             this.ProductPrice.Name = "ProductPrice";
-            this.ProductPrice.Width = 200;
+            this.ProductPrice.Width = 171;
             // 
             // ProductMin
             // 
+            this.ProductMin.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.ProductMin.HeaderText = "Min";
             this.ProductMin.MinimumWidth = 10;
             this.ProductMin.Name = "ProductMin";
-            this.ProductMin.Width = 200;
+            this.ProductMin.Width = 92;
             // 
             // ProductMax
             // 
+            this.ProductMax.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.ProductMax.HeaderText = "Max";
             this.ProductMax.MinimumWidth = 10;
             this.ProductMax.Name = "ProductMax";
-            this.ProductMax.Width = 200;
+            this.ProductMax.Width = 98;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2100, 1023);
-            this.Controls.Add(this.dataGridView2);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.ProductsDataGridView);
+            this.Controls.Add(this.PartsDataGridView);
             this.Controls.Add(this.AddProductBtn);
             this.Controls.Add(this.ModifyProductBtn);
             this.Controls.Add(this.DeleteProductBtn);
@@ -349,8 +368,8 @@
             this.Name = "MainForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PartsDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ProductsDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -372,12 +391,12 @@
         private System.Windows.Forms.Button AddProductBtn;
         private System.Windows.Forms.Button ModifyProductBtn;
         private System.Windows.Forms.Button DeleteProductBtn;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView PartsDataGridView;
+        private System.Windows.Forms.DataGridView ProductsDataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn PartID;
         private System.Windows.Forms.DataGridViewTextBoxColumn PartName;
         private System.Windows.Forms.DataGridViewTextBoxColumn PartInventory;
         private System.Windows.Forms.DataGridViewTextBoxColumn PartPrice;
-        private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridViewTextBoxColumn MinPart;
         private System.Windows.Forms.DataGridViewTextBoxColumn MaxPart;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductID;
