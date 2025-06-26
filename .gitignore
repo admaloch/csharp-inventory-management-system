@@ -1,0 +1,43 @@
+
+## Visual Studio / C# Defaults
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.sln.docstates
+
+## Build Results
+[Bb]in/
+[Oo]bj/
+[Rr]elease/
+[Dd]ebug/
+x64/
+x86/
+[Aa][Rr][Mm]/
+
+## Visual Studio files
+.vs/
+*.vc.db
+*.cache/
+*.log/
+
+## Packages
+packages/
+*.nupkg
+project.lock.json
+project.assets.json
+
+## Other files
+*.db
+*.bak
+*.bak2
+*.mdf
+*.ldf
+*.ndf
+
+## Logs
+*.log
+
+## Miscellaneous
+Thumbs.db
+Desktop.ini
