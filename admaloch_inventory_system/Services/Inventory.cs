@@ -5,7 +5,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
- 
+using System.Windows.Forms;
+
+
 
 namespace admaloch_inventory_system.Services
 {
@@ -18,9 +20,8 @@ namespace admaloch_inventory_system.Services
         static Inventory()
         {
             // Parts
-            AllParts.Add(new Inhouse
+            Inventory.AddPart(new Inhouse
             {
-                PartID = 0,
                 Name = "Wheel",
                 InStock = 15,
                 Price = 12.11m,
@@ -29,9 +30,8 @@ namespace admaloch_inventory_system.Services
                 MachineID = 100
             });
 
-            AllParts.Add(new Outsourced
+            Inventory.AddPart(new Outsourced
             {
-                PartID = 1,
                 Name = "Pedal",
                 InStock = 11,
                 Price = 8.22m,
@@ -40,9 +40,8 @@ namespace admaloch_inventory_system.Services
                 CompanyName = "Pedal Co."
             });
 
-            AllParts.Add(new Outsourced
+            Inventory.AddPart(new Outsourced
             {
-                PartID = 2,
                 Name = "Chain",
                 InStock = 12,
                 Price = 8.33m,
@@ -51,9 +50,8 @@ namespace admaloch_inventory_system.Services
                 CompanyName = "Chain Supply"
             });
 
-            AllParts.Add(new Inhouse
+            Inventory.AddPart(new Inhouse
             {
-                PartID = 3,
                 Name = "Seat",
                 InStock = 8,
                 Price = 4.55m,
@@ -63,46 +61,127 @@ namespace admaloch_inventory_system.Services
             });
 
             // Products
-            Inventory.addProduct(0, "Red Bicycle", 15, 11.44m, 1, 25);
-            Inventory.addProduct(1, "Yellow Bicycle", 19, 9.66m, 1, 20);
-            Inventory.addProduct(2, "Blue Bicycle", 5, 12.77m, 1, 25);
+            Inventory.AddProduct(new Product
+            {
+                Name = "Red Bicycle",
+                InStock = 15,
+                Price = 11.44m,
+                Min = 1,
+                Max = 25
+            });
+
+            Inventory.AddProduct(new Product
+            {
+                Name = "Yellow Bicycle",
+                InStock = 19,
+                Price = 9.66m,
+                Min = 1,
+                Max = 20
+            });
+
+            Inventory.AddProduct(new Product
+            {
+                Name = "Blue Bicycle",
+                InStock = 5,
+                Price = 12.77m,
+                Min = 1,
+                Max = 25
+            });
         }
 
-       public static void addProduct(int id, string name, int stock, decimal price, int min, int max)
+        //for adding/updating/locating/deleting products
+        public static void AddProduct(Product product)
         {
-            Product product = new Product
-            {
-                ProductID = id,
-                Name = name,
-                InStock = stock,
-                Price = price,
-                Min = min,
-                Max = max
-            };
-
             AllProducts.Add(product);
         }
-        public static void addPart( int id, string name, int stock, decimal price, int min, int max, int machineID = null, string companyName = null)
+
+        public static Product LookupProduct(int productId)
         {
-            if(machineID != null)
-            {
- Inhouse part = new Inhouse
-            {
-                ProductID = id,
-                Name = name,
-                InStock = stock,
-                Price = price,
-                Min = min,
-                Max = max,
-                MachineID = 101
-            };
-
-            AllParts.Add(part);
-            }
-           
-
-          
+            var product = AllProducts.FirstOrDefault(p => p.ProductID == productId);
+            return product;
         }
+
+        public static bool RemoveProduct(int  productId)
+        {
+            var productToRemove = Inventory.LookupProduct(productId);
+            if (productToRemove != null) 
+            {
+                return AllProducts.Remove(productToRemove);
+            }
+            else
+            {
+                MessageBox.Show("Product not found.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+        }
+
+        public static void UpdateProduct(int productId, Product product)
+        {
+            // Find index of the product to update
+            int index = AllProducts.ToList().FindIndex(p => p.ProductID == productId);
+
+            if (index >= 0)
+            {
+                // Replace the old product with the updated product at the found index
+                AllProducts[index] = product;
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Product not found to update.",
+                    "Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
+        }
+
+
+        //for adding/updating/locating/deleting parts
+        public static void AddPart(Part part)
+        {
+            AllParts.Add(part);
+        }
+
+        public static Part LookupPart(int partId)
+        {
+            var part = AllParts.FirstOrDefault(p => p.PartID == partId);
+            return part;
+        }
+
+        public static bool DeletePart(int partId)
+        {
+            var partToRemove = LookupPart(partId);
+            if (partToRemove != null)
+            {
+                return AllParts.Remove(partToRemove);
+            }
+            else
+            {
+                MessageBox.Show("Part not found.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+        }
+
+        public static void UpdatePart(int partId, Part updatedPart)
+        {
+            int index = AllParts.ToList().FindIndex(p => p.PartID == partId);
+
+            if (index >= 0)
+            {
+                AllParts[index] = updatedPart;
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Part not found to update.",
+                    "Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
+        }
+
 
     }
 }

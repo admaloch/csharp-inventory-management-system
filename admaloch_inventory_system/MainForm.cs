@@ -26,7 +26,6 @@ namespace admaloch_inventory_system
             dgvParts.DataSource = Inventory.AllParts;
             dgvProducts.DataSource = Inventory.AllProducts;
 
-
         }
 
         private void AddPartBtn_Click(object sender, EventArgs e)
@@ -56,37 +55,28 @@ namespace admaloch_inventory_system
         private void DeletePartBtn_Click(object sender, EventArgs e)
         {
             DataGridViewRow activeRow = dgvParts.CurrentRow; //get the current row
-            if (dgvParts.CurrentRow == null || dgvParts.CurrentRow.IsNewRow)
+            int partId = Convert.ToInt32(activeRow.Cells[0].Value);
+            if (dgvParts.CurrentRow != null && dgvParts.CurrentRow.Selected)
             {
-                MessageBox.Show(
-                    "Please select something to delete.",
-                    "Warning",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                Inventory.DeletePart(partId);
             }
             else
             {
-                dgvParts.Rows.Remove(dgvParts.CurrentRow);
+                MessageBox.Show("No row selected. Please select a row to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
         }
 
         private void DeleteProductBtn_Click(object sender, EventArgs e)
         {
-            DataGridViewRow activeRow = dgvParts.CurrentRow; //get the current row
-            if (dgvParts.CurrentRow == null || dgvParts.CurrentRow.IsNewRow)
+            DataGridViewRow activeRow = dgvProducts.CurrentRow; //get the current row
+            int productId = Convert.ToInt32(activeRow.Cells[0].Value);
+            if (dgvProducts.CurrentRow != null && dgvProducts.CurrentRow.Selected)
             {
-                MessageBox.Show(
-                    "Please select something to delete.",
-                    "Warning",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                Inventory.RemoveProduct(productId);
             }
             else
             {
-                dgvParts.Rows.Remove(dgvParts.CurrentRow);
+                MessageBox.Show("No row selected. Please select a row to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

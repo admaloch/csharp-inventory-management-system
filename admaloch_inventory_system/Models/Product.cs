@@ -9,14 +9,19 @@ namespace admaloch_inventory_system.Models
 {
     public class Product
     {
-        public int ProductID { get; set; }
+        private static int _nextId = 0; // static counter for auto-incrementing
+
+        public int ProductID { get; private set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int InStock { get; set; }
         public int Min { get; set; }
         public int Max { get; set; }
 
-        //public BindingList<Part> AssociatedParts { get; set; } = new BindingList<Part>();
-
+        public Product()
+        {
+            ProductID = _nextId++;
+        }
     }
+
 }
