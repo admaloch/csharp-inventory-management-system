@@ -1,4 +1,5 @@
-﻿using System;
+﻿using admaloch_inventory_system.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,7 +17,17 @@ namespace admaloch_inventory_system
         public AddPart()
         {
             InitializeComponent();
-            addPartSaveBtn.Enabled = false;
+        }
+
+        private void AddPart_Load(object sender, EventArgs e)
+        {
+            addPartSaveBtn.Enabled = false;//disable save btn unless form validated
+            ValidateForm();//initial validate -- will make necesary inputs red
+            companyNameLbl.Visible = false;// hide company name label beacuse in-house is default
+            
+            // Attach shared listener to radio buttons
+            inHouseBtn.CheckedChanged += RadioChanged;
+            outsourceBtn.CheckedChanged += RadioChanged;
 
             // Hook shared listener for validation
             nameTxt.TextChanged += SharedInputChanged;
@@ -24,8 +35,33 @@ namespace admaloch_inventory_system
             priceTxt.TextChanged += SharedInputChanged;
             maxTxt.TextChanged += SharedInputChanged;
             minTxt.TextChanged += SharedInputChanged;
-            machineIdTxt.TextChanged += SharedInputChanged;
+            partOriginTxt.TextChanged += SharedInputChanged;
+
+            //set value of id
+            int nextPartId = Inventory.AllParts.Any()
+               ? Inventory.AllParts.Max(p => p.PartID) + 1
+               : 0;
+            idTxt.Text = nextPartId.ToString();
+
         }
+
+        private void RadioChanged(object sender, EventArgs e)
+        {
+            if (inHouseBtn.Checked)
+            {
+                companyNameLbl.Visible = false;
+                machineLbl.Visible = true;
+
+            }
+            else if (outsourceBtn.Checked)
+            {
+                companyNameLbl.Visible = true;
+                machineLbl.Visible = false;
+            }
+
+            ValidateForm(); // Revalidate form if needed
+        }
+
 
         private void SharedInputChanged(object sender, EventArgs e)
         {
@@ -91,16 +127,35 @@ namespace admaloch_inventory_system
                 minTxt.BackColor = Color.White;
             }
 
-            // MachineID: integer (you can skip this check if Outsourced is selected)
-            if (!int.TryParse(machineIdTxt.Text, out _))
+            // MachineID or Company Name: integer (you can skip this check if Outsourced is selected)
+            if (inHouseBtn.Checked)
             {
-                machineIdTxt.BackColor = Color.LightCoral;
-                allValid = false;
+                // Expecting an integer
+                if (!int.TryParse(partOriginTxt.Text.Trim(), out _))
+                {
+                    partOriginTxt.BackColor = Color.LightCoral;
+                    allValid = false;
+                }
+                else
+                {
+                    partOriginTxt.BackColor = Color.White;
+                }
             }
             else
             {
-                machineIdTxt.BackColor = Color.White;
+                // Expecting a non-empty, non-numeric string
+                if (string.IsNullOrWhiteSpace(partOriginTxt.Text.Trim()) || int.TryParse(partOriginTxt.Text.Trim(), out _))
+                {
+                    partOriginTxt.BackColor = Color.LightCoral;
+                    allValid = false;
+                }
+                else
+                {
+                    partOriginTxt.BackColor = Color.White;
+                }
             }
+
+
 
             addPartSaveBtn.Enabled = allValid;
         }
@@ -108,6 +163,12 @@ namespace admaloch_inventory_system
         private void AddPartSaveBtn_Click(object sender, EventArgs e)
         {
             // Save logic here
+        }
+
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

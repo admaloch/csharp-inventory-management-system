@@ -33,21 +33,23 @@
             this.outsourceBtn = new System.Windows.Forms.RadioButton();
             this.inHouseBtn = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
-            this.idText = new System.Windows.Forms.TextBox();
+            this.idTxt = new System.Windows.Forms.TextBox();
             this.nameTxt = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.inventoryTxt = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.priceTxt = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.machineIdTxt = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.partOriginTxt = new System.Windows.Forms.TextBox();
+            this.machineIdLbl = new System.Windows.Forms.Label();
             this.maxTxt = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.minTxt = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.addPartSaveBtn = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.companyNameLbl = new System.Windows.Forms.Label();
+            this.machineLbl = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,13 +105,14 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "ID";
             // 
-            // idText
+            // idTxt
             // 
-            this.idText.Enabled = false;
-            this.idText.Location = new System.Drawing.Point(236, 131);
-            this.idText.Name = "idText";
-            this.idText.Size = new System.Drawing.Size(245, 31);
-            this.idText.TabIndex = 3;
+            this.idTxt.Enabled = false;
+            this.idTxt.Location = new System.Drawing.Point(236, 131);
+            this.idTxt.Name = "idTxt";
+            this.idTxt.ReadOnly = true;
+            this.idTxt.Size = new System.Drawing.Size(245, 31);
+            this.idTxt.TabIndex = 3;
             // 
             // nameTxt
             // 
@@ -117,7 +120,6 @@
             this.nameTxt.Name = "nameTxt";
             this.nameTxt.Size = new System.Drawing.Size(245, 31);
             this.nameTxt.TabIndex = 5;
-            this.nameTxt.TextChanged += new System.EventHandler(this.nameText_TextChanged);
             // 
             // label3
             // 
@@ -163,22 +165,21 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "Price/Cost";
             // 
-            // machineIdTxt
+            // partOriginTxt
             // 
-            this.machineIdTxt.Location = new System.Drawing.Point(236, 460);
-            this.machineIdTxt.Name = "machineIdTxt";
-            this.machineIdTxt.Size = new System.Drawing.Size(245, 31);
-            this.machineIdTxt.TabIndex = 11;
+            this.partOriginTxt.Location = new System.Drawing.Point(259, 466);
+            this.partOriginTxt.Name = "partOriginTxt";
+            this.partOriginTxt.Size = new System.Drawing.Size(286, 31);
+            this.partOriginTxt.TabIndex = 11;
             // 
-            // label6
+            // machineIdLbl
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(53, 460);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(177, 37);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Machine ID";
+            this.machineIdLbl.AutoSize = true;
+            this.machineIdLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.machineIdLbl.Location = new System.Drawing.Point(53, 460);
+            this.machineIdLbl.Name = "machineIdLbl";
+            this.machineIdLbl.Size = new System.Drawing.Size(0, 37);
+            this.machineIdLbl.TabIndex = 10;
             // 
             // maxTxt
             // 
@@ -217,7 +218,7 @@
             // addPartSaveBtn
             // 
             this.addPartSaveBtn.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.addPartSaveBtn.Location = new System.Drawing.Point(349, 539);
+            this.addPartSaveBtn.Location = new System.Drawing.Point(326, 531);
             this.addPartSaveBtn.Name = "addPartSaveBtn";
             this.addPartSaveBtn.Size = new System.Drawing.Size(114, 59);
             this.addPartSaveBtn.TabIndex = 16;
@@ -228,34 +229,56 @@
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.button1.Location = new System.Drawing.Point(482, 539);
+            this.button1.Location = new System.Drawing.Point(459, 531);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(114, 59);
             this.button1.TabIndex = 17;
             this.button1.Text = "Cancel";
             this.button1.UseVisualStyleBackColor = false;
             // 
+            // companyNameLbl
+            // 
+            this.companyNameLbl.AutoSize = true;
+            this.companyNameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.companyNameLbl.Location = new System.Drawing.Point(12, 466);
+            this.companyNameLbl.Name = "companyNameLbl";
+            this.companyNameLbl.Size = new System.Drawing.Size(249, 37);
+            this.companyNameLbl.TabIndex = 18;
+            this.companyNameLbl.Text = "Company Name";
+            // 
+            // machineLbl
+            // 
+            this.machineLbl.AutoSize = true;
+            this.machineLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.machineLbl.Location = new System.Drawing.Point(76, 466);
+            this.machineLbl.Name = "machineLbl";
+            this.machineLbl.Size = new System.Drawing.Size(177, 37);
+            this.machineLbl.TabIndex = 19;
+            this.machineLbl.Text = "Machine ID";
+            // 
             // AddPart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(676, 646);
+            this.ClientSize = new System.Drawing.Size(619, 642);
+            this.Controls.Add(this.machineLbl);
+            this.Controls.Add(this.companyNameLbl);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.addPartSaveBtn);
             this.Controls.Add(this.minTxt);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.maxTxt);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.machineIdTxt);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.partOriginTxt);
+            this.Controls.Add(this.machineIdLbl);
             this.Controls.Add(this.priceTxt);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.inventoryTxt);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.nameTxt);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.idText);
+            this.Controls.Add(this.idTxt);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
@@ -275,20 +298,22 @@
         private System.Windows.Forms.RadioButton outsourceBtn;
         private System.Windows.Forms.RadioButton inHouseBtn;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox idText;
+        private System.Windows.Forms.TextBox idTxt;
         private System.Windows.Forms.TextBox nameTxt;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox inventoryTxt;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox priceTxt;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox machineIdTxt;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox partOriginTxt;
+        private System.Windows.Forms.Label machineIdLbl;
         private System.Windows.Forms.TextBox maxTxt;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox minTxt;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button addPartSaveBtn;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label companyNameLbl;
+        private System.Windows.Forms.Label machineLbl;
     }
 }

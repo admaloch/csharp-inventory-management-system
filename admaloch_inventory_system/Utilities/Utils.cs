@@ -8,6 +8,6 @@ namespace admaloch_inventory_system.Utilities
 {
     internal class Utils
     {
-        public static void ValidateInputs()
+
     }
 }
