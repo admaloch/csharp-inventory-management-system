@@ -1,4 +1,5 @@
-﻿using admaloch_inventory_system.Services;
+﻿using admaloch_inventory_system.Models;
+using admaloch_inventory_system.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ namespace admaloch_inventory_system
         public AddPart()
         {
             InitializeComponent();
+            this.Load += AddPart_Load;
         }
 
         private void AddPart_Load(object sender, EventArgs e)
@@ -105,8 +107,23 @@ namespace admaloch_inventory_system
                 priceTxt.BackColor = Color.White;
             }
 
-            // Max: integer
-            if (!int.TryParse(maxTxt.Text, out _))
+            // Declare these early so we can use them in a second validation step
+            bool minValid = int.TryParse(minTxt.Text, out int min);
+            bool maxValid = int.TryParse(maxTxt.Text, out int max);
+
+            // Min validation
+            if (!minValid)
+            {
+                minTxt.BackColor = Color.LightCoral;
+                allValid = false;
+            }
+            else
+            {
+                minTxt.BackColor = Color.White;
+            }
+
+            // Max validation
+            if (!maxValid)
             {
                 maxTxt.BackColor = Color.LightCoral;
                 allValid = false;
@@ -116,16 +133,14 @@ namespace admaloch_inventory_system
                 maxTxt.BackColor = Color.White;
             }
 
-            // Min: integer
-            if (!int.TryParse(minTxt.Text, out _))
+            // Additional logic: Min should not be greater than Max
+            if (minValid && maxValid && min > max)
             {
                 minTxt.BackColor = Color.LightCoral;
+                maxTxt.BackColor = Color.LightCoral;
                 allValid = false;
             }
-            else
-            {
-                minTxt.BackColor = Color.White;
-            }
+
 
             // MachineID or Company Name: integer (you can skip this check if Outsourced is selected)
             if (inHouseBtn.Checked)
@@ -162,13 +177,34 @@ namespace admaloch_inventory_system
 
         private void AddPartSaveBtn_Click(object sender, EventArgs e)
         {
-            // Save logic here
+            if (inHouseBtn.Checked)
+            {
+                Inventory.AddPart(new Inhouse
+                {
+                    Name = nameTxt.Text,
+                    InStock = int.Parse(inventoryTxt.Text),
+                    Price = decimal.Parse(priceTxt.Text),
+                    Min = int.Parse(minTxt.Text),
+                    Max = int.Parse(maxTxt.Text),
+                    MachineID = int.Parse(partOriginTxt.Text) // Assuming this input is used for MachineID when In-House
+                });
+            }
+            else
+            {
+                Inventory.AddPart(new Outsourced
+                {
+                    Name = nameTxt.Text,
+                    InStock = int.Parse(inventoryTxt.Text),
+                    Price = decimal.Parse(priceTxt.Text),
+                    Min = int.Parse(minTxt.Text),
+                    Max = int.Parse(maxTxt.Text),
+                    CompanyName = partOriginTxt.Text // Same input box used for CompanyName when Outsourced
+                });
+            }
+            this.Close();
         }
 
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
 
-        }
     }
 }
