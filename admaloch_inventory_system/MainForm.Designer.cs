@@ -88,6 +88,7 @@
             this.searchPartsBtn.TabIndex = 3;
             this.searchPartsBtn.Text = "Search";
             this.searchPartsBtn.UseVisualStyleBackColor = false;
+            this.searchPartsBtn.Click += new System.EventHandler(this.searchPartsBtn_Click);
             // 
             // searchPartsTxt
             // 
@@ -113,6 +114,7 @@
             this.searchProductsBtn.TabIndex = 5;
             this.searchProductsBtn.Text = "Search";
             this.searchProductsBtn.UseVisualStyleBackColor = false;
+            this.searchProductsBtn.Click += new System.EventHandler(this.searchProductsBtn_Click);
             // 
             // ExitMainFormBtn
             // 

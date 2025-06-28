@@ -46,10 +46,9 @@
             this.label7 = new System.Windows.Forms.Label();
             this.minTxt = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.addPartSaveBtn = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.companyNameLbl = new System.Windows.Forms.Label();
-            this.machineLbl = new System.Windows.Forms.Label();
+            this.saveBtn = new System.Windows.Forms.Button();
+            this.cancelBtn = new System.Windows.Forms.Button();
+            this.originLbl = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -215,46 +214,37 @@
             this.label8.TabIndex = 14;
             this.label8.Text = "Min";
             // 
-            // addPartSaveBtn
+            // saveBtn
             // 
-            this.addPartSaveBtn.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.addPartSaveBtn.Location = new System.Drawing.Point(326, 531);
-            this.addPartSaveBtn.Name = "addPartSaveBtn";
-            this.addPartSaveBtn.Size = new System.Drawing.Size(114, 59);
-            this.addPartSaveBtn.TabIndex = 16;
-            this.addPartSaveBtn.Text = "Save";
-            this.addPartSaveBtn.UseVisualStyleBackColor = false;
-            this.addPartSaveBtn.Click += new System.EventHandler(this.AddPartSaveBtn_Click);
+            this.saveBtn.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.saveBtn.Location = new System.Drawing.Point(326, 531);
+            this.saveBtn.Name = "saveBtn";
+            this.saveBtn.Size = new System.Drawing.Size(114, 59);
+            this.saveBtn.TabIndex = 16;
+            this.saveBtn.Text = "Save";
+            this.saveBtn.UseVisualStyleBackColor = false;
+            this.saveBtn.Click += new System.EventHandler(this.AddPartSaveBtn_Click);
             // 
-            // button1
+            // cancelBtn
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.button1.Location = new System.Drawing.Point(459, 531);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(114, 59);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "Cancel";
-            this.button1.UseVisualStyleBackColor = false;
+            this.cancelBtn.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.cancelBtn.Location = new System.Drawing.Point(459, 531);
+            this.cancelBtn.Name = "cancelBtn";
+            this.cancelBtn.Size = new System.Drawing.Size(114, 59);
+            this.cancelBtn.TabIndex = 17;
+            this.cancelBtn.Text = "Cancel";
+            this.cancelBtn.UseVisualStyleBackColor = false;
+            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
-            // companyNameLbl
+            // originLbl
             // 
-            this.companyNameLbl.AutoSize = true;
-            this.companyNameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.companyNameLbl.Location = new System.Drawing.Point(12, 466);
-            this.companyNameLbl.Name = "companyNameLbl";
-            this.companyNameLbl.Size = new System.Drawing.Size(249, 37);
-            this.companyNameLbl.TabIndex = 18;
-            this.companyNameLbl.Text = "Company Name";
-            // 
-            // machineLbl
-            // 
-            this.machineLbl.AutoSize = true;
-            this.machineLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.machineLbl.Location = new System.Drawing.Point(76, 466);
-            this.machineLbl.Name = "machineLbl";
-            this.machineLbl.Size = new System.Drawing.Size(177, 37);
-            this.machineLbl.TabIndex = 19;
-            this.machineLbl.Text = "Machine ID";
+            this.originLbl.AutoSize = true;
+            this.originLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.originLbl.Location = new System.Drawing.Point(76, 466);
+            this.originLbl.Name = "originLbl";
+            this.originLbl.Size = new System.Drawing.Size(177, 37);
+            this.originLbl.TabIndex = 19;
+            this.originLbl.Text = "Machine ID";
             // 
             // AddPart
             // 
@@ -262,10 +252,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(619, 642);
-            this.Controls.Add(this.machineLbl);
-            this.Controls.Add(this.companyNameLbl);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.addPartSaveBtn);
+            this.Controls.Add(this.originLbl);
+            this.Controls.Add(this.cancelBtn);
+            this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.minTxt);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.maxTxt);
@@ -311,9 +300,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox minTxt;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button addPartSaveBtn;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label companyNameLbl;
-        private System.Windows.Forms.Label machineLbl;
+        private System.Windows.Forms.Button saveBtn;
+        private System.Windows.Forms.Button cancelBtn;
+        private System.Windows.Forms.Label originLbl;
     }
 }

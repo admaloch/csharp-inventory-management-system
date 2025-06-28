@@ -36,8 +36,28 @@ namespace admaloch_inventory_system
 
         private void ModifyPartBtn_Click(object sender, EventArgs e)
         {
-            ModifyPart frm = new ModifyPart();
-            frm.Show();
+            if (dgvParts.SelectedRows.Count > 0 &&
+         !dgvParts.SelectedRows[0].IsNewRow)
+            {
+                int partId = Convert.ToInt32(dgvParts.CurrentRow.Cells["PartID"].Value);
+                Part selectedPart = Inventory.LookupPart(partId);
+
+                if (selectedPart != null)
+                {
+                    ModifyPart modifyForm = new ModifyPart(selectedPart);
+                    modifyForm.Show();
+                }
+                
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Please select a part to modify.",
+                    "No Selection",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
         }
 
         private void AddProductBtn_Click(object sender, EventArgs e)
@@ -89,6 +109,68 @@ namespace admaloch_inventory_system
         {
             dgvProducts.ClearSelection();
 
+        }
+
+
+        private void searchPartsBtn_Click(object sender, EventArgs e)
+        {
+            string searchTerm = searchPartsTxt.Text.Trim().ToLower();
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                MessageBox.Show("Please enter a search term.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            bool matchFound = false;
+
+            foreach (DataGridViewRow row in dgvParts.Rows)
+            {
+                // Assuming the "Part Name" is in column index 1
+                if (row.Cells[1].Value != null &&
+                    row.Cells[1].Value.ToString().ToLower().Contains(searchTerm))
+                {
+                    row.Selected = true;
+                    dgvParts.CurrentCell = row.Cells[1]; 
+                    matchFound = true;
+                    break; 
+                }
+            }
+
+            if (!matchFound)
+            {
+                MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void searchProductsBtn_Click(object sender, EventArgs e)
+        {
+            string searchTerm = searchProductsTxt.Text.Trim().ToLower();
+
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                MessageBox.Show("Please enter a search term.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            bool matchFound = false;
+
+            foreach (DataGridViewRow row in dgvProducts.Rows)
+            {
+                if (row.Cells[1].Value != null &&
+                    row.Cells[1].Value.ToString().ToLower().Contains(searchTerm))
+                {
+                    row.Selected = true;
+                    dgvProducts.CurrentCell = row.Cells[1]; 
+                    matchFound = true;
+                    break; 
+                }
+            }
+
+            if (!matchFound)
+            {
+                MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

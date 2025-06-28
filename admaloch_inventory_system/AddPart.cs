@@ -23,9 +23,8 @@ namespace admaloch_inventory_system
 
         private void AddPart_Load(object sender, EventArgs e)
         {
-            addPartSaveBtn.Enabled = false;//disable save btn unless form validated
+            saveBtn.Enabled = false;//disable save btn unless form validated
             ValidateForm();//initial validate -- will make necesary inputs red
-            companyNameLbl.Visible = false;// hide company name label beacuse in-house is default
             
             // Attach shared listener to radio buttons
             inHouseBtn.CheckedChanged += RadioChanged;
@@ -51,14 +50,11 @@ namespace admaloch_inventory_system
         {
             if (inHouseBtn.Checked)
             {
-                companyNameLbl.Visible = false;
-                machineLbl.Visible = true;
-
+                originLbl.Text = "Machine ID";
             }
             else if (outsourceBtn.Checked)
             {
-                companyNameLbl.Visible = true;
-                machineLbl.Visible = false;
+                originLbl.Text = "Company";
             }
 
             ValidateForm(); // Revalidate form if needed
@@ -107,7 +103,7 @@ namespace admaloch_inventory_system
                 priceTxt.BackColor = Color.White;
             }
 
-            // Declare these early so we can use them in a second validation step
+            // min/max validation
             bool minValid = int.TryParse(minTxt.Text, out int min);
             bool maxValid = int.TryParse(maxTxt.Text, out int max);
 
@@ -133,7 +129,7 @@ namespace admaloch_inventory_system
                 maxTxt.BackColor = Color.White;
             }
 
-            // Additional logic: Min should not be greater than Max
+            // extra logic: Min should not be greater than Max
             if (minValid && maxValid && min > max)
             {
                 minTxt.BackColor = Color.LightCoral;
@@ -142,7 +138,7 @@ namespace admaloch_inventory_system
             }
 
 
-            // MachineID or Company Name: integer (you can skip this check if Outsourced is selected)
+            // MachineID or Company Name
             if (inHouseBtn.Checked)
             {
                 // Expecting an integer
@@ -172,7 +168,7 @@ namespace admaloch_inventory_system
 
 
 
-            addPartSaveBtn.Enabled = allValid;
+            saveBtn.Enabled = allValid;
         }
 
         private void AddPartSaveBtn_Click(object sender, EventArgs e)
@@ -204,7 +200,9 @@ namespace admaloch_inventory_system
             this.Close();
         }
 
-
-
+        private void cancelBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
