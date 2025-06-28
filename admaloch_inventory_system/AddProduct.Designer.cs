@@ -49,6 +49,8 @@
             this.ProductSearchBtn = new System.Windows.Forms.Button();
             this.dgvParts = new System.Windows.Forms.DataGridView();
             this.dgvAssociatedParts = new System.Windows.Forms.DataGridView();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvParts)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAssociatedParts)).BeginInit();
             this.SuspendLayout();
@@ -259,11 +261,33 @@
             this.dgvAssociatedParts.Size = new System.Drawing.Size(884, 310);
             this.dgvAssociatedParts.TabIndex = 43;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(622, 97);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(134, 37);
+            this.label6.TabIndex = 44;
+            this.label6.Text = "All parts";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(622, 492);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(258, 37);
+            this.label9.TabIndex = 45;
+            this.label9.Text = "Associated Parts";
+            // 
             // AddProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1588, 1025);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.dgvAssociatedParts);
             this.Controls.Add(this.dgvParts);
             this.Controls.Add(this.searchPartsTxt);
@@ -317,5 +341,7 @@
         private System.Windows.Forms.Button ProductSearchBtn;
         private System.Windows.Forms.DataGridView dgvParts;
         private System.Windows.Forms.DataGridView dgvAssociatedParts;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label9;
     }
 }

@@ -68,8 +68,28 @@ namespace admaloch_inventory_system
 
         private void ModifyProductBtn_Click(object sender, EventArgs e)
         {
-            ModifyProduct frm = new ModifyProduct();
-            frm.Show();
+            if (dgvProducts.SelectedRows.Count > 0 &&
+         !dgvProducts.SelectedRows[0].IsNewRow)
+            {
+                int productId = Convert.ToInt32(dgvProducts.CurrentRow.Cells["ProductID"].Value);
+                Product selectedProduct = Inventory.LookupProduct(productId);
+
+                if (selectedProduct != null)
+                {
+                    ModifyProduct modifyForm = new ModifyProduct(selectedProduct);
+                    modifyForm.Show();
+                }
+
+            }
+            else
+            {
+                MessageBox.Show(
+                    "Please select a product to modify.",
+                    "No Selection",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
         }
 
         private void DeletePartBtn_Click(object sender, EventArgs e)

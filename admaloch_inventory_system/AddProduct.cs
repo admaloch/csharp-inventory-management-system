@@ -23,6 +23,10 @@ namespace admaloch_inventory_system
             dgvAssociatedParts.DataSource = Product.AssociatedParts;
         }
 
+        int nextProductId = Inventory.AllProducts.Any()
+               ? Inventory.AllProducts.Max(p => p.ProductID) + 1
+               : 0;
+
         private void AddPart_Load(object sender, EventArgs e)
         {
             saveBtn.Enabled = false;//disable save btn unless form validated
@@ -37,9 +41,7 @@ namespace admaloch_inventory_system
             minTxt.TextChanged += SharedInputChanged;
 
             //set value of id
-            int nextProductId = Inventory.AllProducts.Any()
-               ? Inventory.AllProducts.Max(p => p.ProductID) + 1
-               : 0;
+            
             idTxt.Text = nextProductId.ToString();
 
         }
@@ -124,8 +126,6 @@ namespace admaloch_inventory_system
             {
                 allValid = false;
             }
-
-
 
             saveBtn.Enabled = allValid;
         }
@@ -220,7 +220,6 @@ namespace admaloch_inventory_system
         private void cancelBtn_Click(object sender, EventArgs e)
         {
             this.Close();
-
         }
     }
 }
