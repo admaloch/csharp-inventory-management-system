@@ -22,6 +22,7 @@ namespace admaloch_inventory_system.Services
             // Parts
             Inventory.AddPart(new Inhouse
             {
+                PartID = 0,
                 Name = "Wheel",
                 InStock = 15,
                 Price = 12.11m,
@@ -32,6 +33,7 @@ namespace admaloch_inventory_system.Services
 
             Inventory.AddPart(new Outsourced
             {
+                PartID = 1,
                 Name = "Pedal",
                 InStock = 11,
                 Price = 8.22m,
@@ -42,6 +44,7 @@ namespace admaloch_inventory_system.Services
 
             Inventory.AddPart(new Outsourced
             {
+                PartID = 2,
                 Name = "Chain",
                 InStock = 12,
                 Price = 8.33m,
@@ -52,6 +55,7 @@ namespace admaloch_inventory_system.Services
 
             Inventory.AddPart(new Inhouse
             {
+                PartID = 3,
                 Name = "Seat",
                 InStock = 8,
                 Price = 4.55m,
@@ -63,6 +67,7 @@ namespace admaloch_inventory_system.Services
             // Products
             Inventory.AddProduct(new Product
             {
+                ProductID = 0,
                 Name = "Red Bicycle",
                 InStock = 15,
                 Price = 11.44m,
@@ -72,6 +77,7 @@ namespace admaloch_inventory_system.Services
 
             Inventory.AddProduct(new Product
             {
+                ProductID = 1,
                 Name = "Yellow Bicycle",
                 InStock = 19,
                 Price = 9.66m,
@@ -81,6 +87,7 @@ namespace admaloch_inventory_system.Services
 
             Inventory.AddProduct(new Product
             {
+                ProductID = 2,
                 Name = "Blue Bicycle",
                 InStock = 5,
                 Price = 12.77m,

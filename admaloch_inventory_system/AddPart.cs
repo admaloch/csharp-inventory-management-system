@@ -39,10 +39,7 @@ namespace admaloch_inventory_system
             partOriginTxt.TextChanged += SharedInputChanged;
 
             //set value of id
-            int nextPartId = Inventory.AllParts.Any()
-               ? Inventory.AllParts.Max(p => p.PartID) + 1
-               : 0;
-            idTxt.Text = nextPartId.ToString();
+            idTxt.Text = GetNextPartId().ToString();
 
         }
 
@@ -177,6 +174,7 @@ namespace admaloch_inventory_system
             {
                 Inventory.AddPart(new Inhouse
                 {
+                    PartID = GetNextPartId(),
                     Name = nameTxt.Text,
                     InStock = int.Parse(inventoryTxt.Text),
                     Price = decimal.Parse(priceTxt.Text),
@@ -203,6 +201,13 @@ namespace admaloch_inventory_system
         private void cancelBtn_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private int GetNextPartId() //helper to access next id
+        {
+            return Inventory.AllParts.Any()
+                ? Inventory.AllParts.Max(p => p.PartID) + 1
+                : 0;
         }
     }
 }

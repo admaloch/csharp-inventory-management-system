@@ -10,9 +10,7 @@ namespace admaloch_inventory_system.Models
 {
     public class Product
     {
-        private static int _nextId = 0; // static counter for auto-incrementing
-
-        public int ProductID { get; private set; }
+        public int ProductID { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int InStock { get; set; }
@@ -21,11 +19,6 @@ namespace admaloch_inventory_system.Models
 
         public static BindingList<Part> AssociatedParts { get; set; } = new BindingList<Part>();
 
-
-        public Product()
-        {
-            ProductID = _nextId++;
-        }
         public static void AddAssociatedPart(Part part)
         {
             AssociatedParts.Add(part);

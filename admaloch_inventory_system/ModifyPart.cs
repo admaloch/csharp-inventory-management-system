@@ -204,6 +204,7 @@ namespace admaloch_inventory_system
             {
                 Inventory.UpdatePart(selectedPart.PartID, new Inhouse
                 {
+                    PartID = selectedPart.PartID,
                     Name = nameTxt.Text,
                     InStock = int.Parse(inventoryTxt.Text),
                     Price = decimal.Parse(priceTxt.Text),
@@ -216,6 +217,7 @@ namespace admaloch_inventory_system
             {
                 Inventory.UpdatePart(selectedPart.PartID, new Outsourced
                 {
+                    PartID = selectedPart.PartID,
                     Name = nameTxt.Text,
                     InStock = int.Parse(inventoryTxt.Text),
                     Price = decimal.Parse(priceTxt.Text),

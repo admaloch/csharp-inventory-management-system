@@ -214,6 +214,7 @@ namespace admaloch_inventory_system
         {
             Inventory.UpdateProduct(selectedProduct.ProductID, new Product
             {
+                ProductID = selectedProduct.ProductID,
                 Name = nameTxt.Text,
                 Price = decimal.Parse(priceTxt.Text),
                 InStock = int.Parse(inventoryTxt.Text),
