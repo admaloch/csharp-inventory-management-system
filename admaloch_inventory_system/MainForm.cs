@@ -75,10 +75,18 @@ namespace admaloch_inventory_system
         private void DeletePartBtn_Click(object sender, EventArgs e)
         {
             DataGridViewRow activeRow = dgvParts.CurrentRow; //get the current row
-            int partId = Convert.ToInt32(activeRow.Cells[0].Value);
             if (dgvParts.CurrentRow != null && dgvParts.CurrentRow.Selected)
             {
-                Inventory.DeletePart(partId);
+                int itemId = Convert.ToInt32(activeRow.Cells[0].Value);
+                bool success = Inventory.DeletePart(itemId);
+                if (success)
+                {
+                    MessageBox.Show("Item successfully deleted!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else
             {
@@ -89,10 +97,18 @@ namespace admaloch_inventory_system
         private void DeleteProductBtn_Click(object sender, EventArgs e)
         {
             DataGridViewRow activeRow = dgvProducts.CurrentRow; //get the current row
-            int productId = Convert.ToInt32(activeRow.Cells[0].Value);
             if (dgvProducts.CurrentRow != null && dgvProducts.CurrentRow.Selected)
             {
-                Inventory.RemoveProduct(productId);
+                int itemId = Convert.ToInt32(activeRow.Cells[0].Value);
+                bool success = Inventory.RemoveProduct(itemId);
+                if (success)
+                {
+                    MessageBox.Show("Item successfully deleted!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else
             {
