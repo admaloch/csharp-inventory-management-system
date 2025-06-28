@@ -194,12 +194,7 @@ namespace admaloch_inventory_system
             {
                 int itemId = Convert.ToInt32(activeRow.Cells[0].Value);
                 bool success = Product.RemoveAssociatedPart(itemId);
-                if (success)
-                {
-                    MessageBox.Show("Item successfully deleted!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ValidateForm();
-                }
-                else
+                if (!success)
                 {
                     MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
@@ -222,7 +217,7 @@ namespace admaloch_inventory_system
                 Max = int.Parse(maxTxt.Text),
             });
             this.Close();
-            MessageBox.Show("Product successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Product successfully updated", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)

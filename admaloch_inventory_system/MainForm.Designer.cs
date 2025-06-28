@@ -126,6 +126,7 @@
             this.ExitMainFormBtn.TabIndex = 10;
             this.ExitMainFormBtn.Text = "Exit";
             this.ExitMainFormBtn.UseVisualStyleBackColor = false;
+            this.ExitMainFormBtn.Click += new System.EventHandler(this.ExitMainFormBtn_Click);
             // 
             // deletePartBtn
             // 

@@ -187,6 +187,7 @@ namespace admaloch_inventory_system
             {
                 Inventory.AddPart(new Outsourced
                 {
+                    PartID = GetNextPartId(),
                     Name = nameTxt.Text,
                     InStock = int.Parse(inventoryTxt.Text),
                     Price = decimal.Parse(priceTxt.Text),
@@ -196,6 +197,7 @@ namespace admaloch_inventory_system
                 });
             }
             this.Close();
+            MessageBox.Show("Part successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)

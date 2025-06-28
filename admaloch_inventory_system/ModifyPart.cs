@@ -227,6 +227,8 @@ namespace admaloch_inventory_system
                 });
             }
             this.Close();
+            MessageBox.Show("Part successfully updated!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)

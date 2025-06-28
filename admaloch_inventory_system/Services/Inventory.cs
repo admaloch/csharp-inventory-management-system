@@ -134,12 +134,7 @@ namespace admaloch_inventory_system.Services
             }
             else
             {
-                MessageBox.Show(
-                    "Product not found to update.",
-                    "Warning",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                MessageBox.Show("Product not found to update.","Warning",MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
         }
 

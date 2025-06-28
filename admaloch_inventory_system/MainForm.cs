@@ -99,12 +99,8 @@ namespace admaloch_inventory_system
             {
                 int itemId = Convert.ToInt32(activeRow.Cells[0].Value);
                 bool success = Inventory.DeletePart(itemId);
-                if (success)
-                {
-                    MessageBox.Show("Item successfully deleted!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
+                if (!success)
+                { 
                     MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
@@ -121,11 +117,7 @@ namespace admaloch_inventory_system
             {
                 int itemId = Convert.ToInt32(activeRow.Cells[0].Value);
                 bool success = Inventory.RemoveProduct(itemId);
-                if (success)
-                {
-                    MessageBox.Show("Item successfully deleted!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
+                if (!success)
                 {
                     MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
@@ -207,6 +199,11 @@ namespace admaloch_inventory_system
             {
                 MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void ExitMainFormBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -183,12 +183,7 @@ namespace admaloch_inventory_system
             {
                 int itemId = Convert.ToInt32(activeRow.Cells[0].Value);
                 bool success = Product.RemoveAssociatedPart(itemId);
-                if (success)
-                {
-                    MessageBox.Show("Item successfully deleted!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ValidateForm();
-                }
-                else
+                if (!success)
                 {
                     MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
