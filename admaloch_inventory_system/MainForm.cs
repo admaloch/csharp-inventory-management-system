@@ -1,4 +1,7 @@
-﻿using System;
+﻿using admaloch_inventory_system.Models;
+using admaloch_inventory_system.Services;
+using admaloch_inventory_system.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,8 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using admaloch_inventory_system.Models;
-using admaloch_inventory_system.Services;
 
 
 
@@ -130,54 +131,12 @@ namespace admaloch_inventory_system
 
         private void searchPartsBtn_Click(object sender, EventArgs e)
         {
-            string searchTerm = searchPartsTxt.Text.Trim().ToLower();
-            if (string.IsNullOrWhiteSpace(searchTerm))
-            {
-                MessageBox.Show("Please enter a search term.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            bool matchFound = false;
-            foreach (DataGridViewRow row in dgvParts.Rows)
-            {
-                if (row.Cells[1].Value != null &&
-                    row.Cells[1].Value.ToString().ToLower().Contains(searchTerm))
-                {
-                    row.Selected = true;
-                    dgvParts.CurrentCell = row.Cells[1]; 
-                    matchFound = true;
-                    break; 
-                }
-            }
-            if (!matchFound)
-            {
-                MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            FormUtils.LocateAndSelectRowHelper(dgvParts, searchPartsTxt.Text);//helper func to export repeated logic
         }
 
         private void searchProductsBtn_Click(object sender, EventArgs e)
         {
-            string searchTerm = searchProductsTxt.Text.Trim().ToLower();
-            if (string.IsNullOrWhiteSpace(searchTerm))
-            {
-                MessageBox.Show("Please enter a search term.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            bool matchFound = false;
-            foreach (DataGridViewRow row in dgvProducts.Rows)
-            {
-                if (row.Cells[1].Value != null &&
-                    row.Cells[1].Value.ToString().ToLower().Contains(searchTerm))
-                {
-                    row.Selected = true;
-                    dgvProducts.CurrentCell = row.Cells[1]; 
-                    matchFound = true;
-                    break; 
-                }
-            }
-            if (!matchFound)
-            {
-                MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            FormUtils.LocateAndSelectRowHelper(dgvProducts, searchProductsTxt.Text);//helper func to export repeated logic
         }
 
         private void ExitMainFormBtn_Click(object sender, EventArgs e)
