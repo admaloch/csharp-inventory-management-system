@@ -21,6 +21,8 @@ namespace admaloch_inventory_system
             this.Load += AddPart_Load;
             dgvParts.DataSource = Inventory.AllParts;
             dgvAssociatedParts.DataSource = Product.AssociatedParts;
+            dgvParts.ClearSelection();
+            dgvAssociatedParts.ClearSelection();
         }
 
         private void AddPart_Load(object sender, EventArgs e)
