@@ -40,10 +40,9 @@ namespace admaloch_inventory_system
 
             //set value of id
             idTxt.Text = GetNextPartId().ToString();
-
         }
 
-        private void RadioChanged(object sender, EventArgs e)
+        private void RadioChanged(object sender, EventArgs e)//inhouse vs outsource handler
         {
             if (inHouseBtn.Checked)
             {
@@ -53,17 +52,60 @@ namespace admaloch_inventory_system
             {
                 originLbl.Text = "Company";
             }
-
-            ValidateForm(); // Revalidate form if needed
+            ValidateForm(); 
         }
 
 
-        private void SharedInputChanged(object sender, EventArgs e)
+        private void SharedInputChanged(object sender, EventArgs e)//connect inputs into shared listener
         {
             ValidateForm();
         }
 
-        private void ValidateForm()
+        private void AddPartSaveBtn_Click(object sender, EventArgs e)//
+        {
+            if (inHouseBtn.Checked)
+            {
+                Inventory.AddPart(new Inhouse
+                {
+                    PartID = GetNextPartId(),
+                    Name = nameTxt.Text,
+                    InStock = int.Parse(inventoryTxt.Text),
+                    Price = decimal.Parse(priceTxt.Text),
+                    Min = int.Parse(minTxt.Text),
+                    Max = int.Parse(maxTxt.Text),
+                    MachineID = int.Parse(partOriginTxt.Text) 
+                });
+            }
+            else
+            {
+                Inventory.AddPart(new Outsourced
+                {
+                    PartID = GetNextPartId(),
+                    Name = nameTxt.Text,
+                    InStock = int.Parse(inventoryTxt.Text),
+                    Price = decimal.Parse(priceTxt.Text),
+                    Min = int.Parse(minTxt.Text),
+                    Max = int.Parse(maxTxt.Text),
+                    CompanyName = partOriginTxt.Text 
+                });
+            }
+            this.Close();
+            MessageBox.Show("Part successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void cancelBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private int GetNextPartId() //helper to access next id
+        {
+            return Inventory.AllParts.Any()
+                ? Inventory.AllParts.Max(p => p.PartID) + 1
+                : 0;
+        }
+
+        private void ValidateForm() //go thorugh all form inputs and check to validate before form can be submitted
         {
             bool allValid = true;
 
@@ -162,54 +204,8 @@ namespace admaloch_inventory_system
                     partOriginTxt.BackColor = Color.White;
                 }
             }
-
-
-
             saveBtn.Enabled = allValid;
         }
 
-        private void AddPartSaveBtn_Click(object sender, EventArgs e)
-        {
-            if (inHouseBtn.Checked)
-            {
-                Inventory.AddPart(new Inhouse
-                {
-                    PartID = GetNextPartId(),
-                    Name = nameTxt.Text,
-                    InStock = int.Parse(inventoryTxt.Text),
-                    Price = decimal.Parse(priceTxt.Text),
-                    Min = int.Parse(minTxt.Text),
-                    Max = int.Parse(maxTxt.Text),
-                    MachineID = int.Parse(partOriginTxt.Text) // Assuming this input is used for MachineID when In-House
-                });
-            }
-            else
-            {
-                Inventory.AddPart(new Outsourced
-                {
-                    PartID = GetNextPartId(),
-                    Name = nameTxt.Text,
-                    InStock = int.Parse(inventoryTxt.Text),
-                    Price = decimal.Parse(priceTxt.Text),
-                    Min = int.Parse(minTxt.Text),
-                    Max = int.Parse(maxTxt.Text),
-                    CompanyName = partOriginTxt.Text // Same input box used for CompanyName when Outsourced
-                });
-            }
-            this.Close();
-            MessageBox.Show("Part successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void cancelBtn_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private int GetNextPartId() //helper to access next id
-        {
-            return Inventory.AllParts.Any()
-                ? Inventory.AllParts.Max(p => p.PartID) + 1
-                : 0;
-        }
     }
 }

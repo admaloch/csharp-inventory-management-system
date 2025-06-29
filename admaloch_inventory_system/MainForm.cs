@@ -23,21 +23,22 @@ namespace admaloch_inventory_system
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            dgvParts.DataSource = Inventory.AllParts;
+            dgvParts.DataSource = Inventory.AllParts; //populate dvgs with data
             dgvProducts.DataSource = Inventory.AllProducts;
-
         }
 
         private void AddPartBtn_Click(object sender, EventArgs e)
         {
-            AddPart frm = new AddPart(); 
+            AddPart frm = new AddPart();
             frm.Show(); 
         }
 
+       
+
         private void ModifyPartBtn_Click(object sender, EventArgs e)
         {
-            if (dgvParts.SelectedRows.Count > 0 &&
-         !dgvParts.SelectedRows[0].IsNewRow)
+            if (dgvParts.SelectedRows.Count > 0 && //check if an item is sleected
+                !dgvParts.SelectedRows[0].IsNewRow)
             {
                 int partId = Convert.ToInt32(dgvParts.CurrentRow.Cells["PartID"].Value);
                 Part selectedPart = Inventory.LookupPart(partId);
@@ -47,16 +48,10 @@ namespace admaloch_inventory_system
                     ModifyPart modifyForm = new ModifyPart(selectedPart);
                     modifyForm.Show();
                 }
-                
             }
             else
             {
-                MessageBox.Show(
-                    "Please select a part to modify.",
-                    "No Selection",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                MessageBox.Show( "Please select a part to modify.","No Selection",MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
         }
 
@@ -68,7 +63,7 @@ namespace admaloch_inventory_system
 
         private void ModifyProductBtn_Click(object sender, EventArgs e)
         {
-            if (dgvProducts.SelectedRows.Count > 0 &&
+            if (dgvProducts.SelectedRows.Count > 0 && //check if an item is sleected
          !dgvProducts.SelectedRows[0].IsNewRow)
             {
                 int productId = Convert.ToInt32(dgvProducts.CurrentRow.Cells["ProductID"].Value);
@@ -79,16 +74,10 @@ namespace admaloch_inventory_system
                     ModifyProduct modifyForm = new ModifyProduct(selectedProduct);
                     modifyForm.Show();
                 }
-
             }
             else
             {
-                MessageBox.Show(
-                    "Please select a product to modify.",
-                    "No Selection",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                MessageBox.Show("Please select a product to modify.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -97,8 +86,8 @@ namespace admaloch_inventory_system
             DataGridViewRow activeRow = dgvParts.CurrentRow; //get the current row
             if (dgvParts.CurrentRow != null && dgvParts.CurrentRow.Selected)
             {
-                int itemId = Convert.ToInt32(activeRow.Cells[0].Value);
-                bool success = Inventory.DeletePart(itemId);
+                int partId = Convert.ToInt32(activeRow.Cells[0].Value);
+                bool success = Inventory.DeletePart(partId);
                 if (!success)
                 { 
                     MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -115,8 +104,8 @@ namespace admaloch_inventory_system
             DataGridViewRow activeRow = dgvProducts.CurrentRow; //get the current row
             if (dgvProducts.CurrentRow != null && dgvProducts.CurrentRow.Selected)
             {
-                int itemId = Convert.ToInt32(activeRow.Cells[0].Value);
-                bool success = Inventory.RemoveProduct(itemId);
+                int productId = Convert.ToInt32(activeRow.Cells[0].Value);
+                bool success = Inventory.RemoveProduct(productId);
                 if (!success)
                 {
                     MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -130,31 +119,26 @@ namespace admaloch_inventory_system
 
         private void myBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            dgvParts.ClearSelection();
+            dgvParts.ClearSelection(); //prevent first row from being default active
         }
 
         private void productBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            dgvProducts.ClearSelection();
-
+            dgvProducts.ClearSelection();//prevent first row from being default active
         }
 
 
         private void searchPartsBtn_Click(object sender, EventArgs e)
         {
             string searchTerm = searchPartsTxt.Text.Trim().ToLower();
-
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
                 MessageBox.Show("Please enter a search term.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
             bool matchFound = false;
-
             foreach (DataGridViewRow row in dgvParts.Rows)
             {
-                // Assuming the "Part Name" is in column index 1
                 if (row.Cells[1].Value != null &&
                     row.Cells[1].Value.ToString().ToLower().Contains(searchTerm))
                 {
@@ -164,7 +148,6 @@ namespace admaloch_inventory_system
                     break; 
                 }
             }
-
             if (!matchFound)
             {
                 MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -174,15 +157,12 @@ namespace admaloch_inventory_system
         private void searchProductsBtn_Click(object sender, EventArgs e)
         {
             string searchTerm = searchProductsTxt.Text.Trim().ToLower();
-
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
                 MessageBox.Show("Please enter a search term.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
             bool matchFound = false;
-
             foreach (DataGridViewRow row in dgvProducts.Rows)
             {
                 if (row.Cells[1].Value != null &&
@@ -194,7 +174,6 @@ namespace admaloch_inventory_system
                     break; 
                 }
             }
-
             if (!matchFound)
             {
                 MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
