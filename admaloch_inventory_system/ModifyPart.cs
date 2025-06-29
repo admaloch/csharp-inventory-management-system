@@ -93,111 +93,6 @@ namespace admaloch_inventory_system
             ValidateForm();
         }
 
-        private void ValidateForm()
-        {
-            bool allValid = true;
-
-            // Name: non-empty
-            if (string.IsNullOrWhiteSpace(nameTxt.Text))
-            {
-                nameTxt.BackColor = Color.LightCoral;
-                allValid = false;
-            }
-            else
-            {
-                nameTxt.BackColor = Color.White;
-            }
-
-            // Inventory: integer
-            if (!int.TryParse(inventoryTxt.Text, out _))
-            {
-                inventoryTxt.BackColor = Color.LightCoral;
-                allValid = false;
-            }
-            else
-            {
-                inventoryTxt.BackColor = Color.White;
-            }
-
-            // Price: decimal
-            if (!decimal.TryParse(priceTxt.Text, out _))
-            {
-                priceTxt.BackColor = Color.LightCoral;
-                allValid = false;
-            }
-            else
-            {
-                priceTxt.BackColor = Color.White;
-            }
-
-            // min/max validation
-            bool minValid = int.TryParse(minTxt.Text, out int min);
-            bool maxValid = int.TryParse(maxTxt.Text, out int max);
-
-            // Min validation
-            if (!minValid)
-            {
-                minTxt.BackColor = Color.LightCoral;
-                allValid = false;
-            }
-            else
-            {
-                minTxt.BackColor = Color.White;
-            }
-
-            // Max validation
-            if (!maxValid)
-            {
-                maxTxt.BackColor = Color.LightCoral;
-                allValid = false;
-            }
-            else
-            {
-                maxTxt.BackColor = Color.White;
-            }
-
-            // extra logic: Min should not be greater than Max
-            if (minValid && maxValid && min > max)
-            {
-                minTxt.BackColor = Color.LightCoral;
-                maxTxt.BackColor = Color.LightCoral;
-                allValid = false;
-            }
-
-
-            // MachineID or Company Name
-            if (inHouseBtn.Checked)
-            {
-                // Expecting an integer
-                if (!int.TryParse(partOriginTxt.Text.Trim(), out _))
-                {
-                    partOriginTxt.BackColor = Color.LightCoral;
-                    allValid = false;
-                }
-                else
-                {
-                    partOriginTxt.BackColor = Color.White;
-                }
-            }
-            else
-            {
-                // Expecting a non-empty, non-numeric string
-                if (string.IsNullOrWhiteSpace(partOriginTxt.Text.Trim()) || int.TryParse(partOriginTxt.Text.Trim(), out _))
-                {
-                    partOriginTxt.BackColor = Color.LightCoral;
-                    allValid = false;
-                }
-                else
-                {
-                    partOriginTxt.BackColor = Color.White;
-                }
-            }
-
-
-
-            saveBtn.Enabled = allValid;
-        }
-
         private void saveBtn_Click(object sender, EventArgs e)
         {
             if (inHouseBtn.Checked)
@@ -234,6 +129,14 @@ namespace admaloch_inventory_system
         private void cancelBtn_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ValidateForm()
+        {
+            bool sharedValid = FormValidationService.ValidateSharedInputs(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
+            bool partSpecificValid = FormValidationService.ValidatePartSpecific(partOriginTxt, inHouseBtn);
+
+            saveBtn.Enabled = sharedValid && partSpecificValid;
         }
     }
 }

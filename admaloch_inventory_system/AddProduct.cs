@@ -18,30 +18,25 @@ namespace admaloch_inventory_system
         public AddProduct()
         {
             InitializeComponent();
-            this.Load += AddPart_Load;
-            dgvParts.DataSource = Inventory.AllParts;
-            dgvAssociatedParts.DataSource = Product.AssociatedParts;
-            dgvParts.ClearSelection();
-            dgvAssociatedParts.ClearSelection();
+            this.Load += AddPart_Load; //run some code on load
         }
 
         private void AddPart_Load(object sender, EventArgs e)
         {
-            saveBtn.Enabled = false;//disable save btn unless form validated
-            ValidateForm();//initial validate -- will make necesary inputs red
+            dgvParts.DataSource = Inventory.AllParts; //connect data to dvg
+            dgvAssociatedParts.DataSource = Product.AssociatedParts;
 
-           
-            // Hook shared listener for validation
-            nameTxt.TextChanged += SharedInputChanged;
+            saveBtn.Enabled = false; //disable save btn unless form validated
+
+            ValidateForm(); //initial validate -- will make necesary inputs red
+
+            nameTxt.TextChanged += SharedInputChanged; //add inuts to shared listener for validation
             inventoryTxt.TextChanged += SharedInputChanged;
             priceTxt.TextChanged += SharedInputChanged;
             maxTxt.TextChanged += SharedInputChanged;
             minTxt.TextChanged += SharedInputChanged;
 
-            //set value of id
-            
-            idTxt.Text = GenNextProductId().ToString();
-
+            idTxt.Text = GenNextProductId().ToString(); //set value of id
         }
 
         private void SharedInputChanged(object sender, EventArgs e)
@@ -49,84 +44,7 @@ namespace admaloch_inventory_system
             ValidateForm();
         }
 
-        private void ValidateForm()
-        {
-            bool allValid = true;
-
-            // Name: non-empty
-            if (string.IsNullOrWhiteSpace(nameTxt.Text))
-            {
-                nameTxt.BackColor = Color.LightCoral;
-                allValid = false;
-            }
-            else
-            {
-                nameTxt.BackColor = Color.White;
-            }
-
-            // Inventory: integer
-            if (!int.TryParse(inventoryTxt.Text, out _))
-            {
-                inventoryTxt.BackColor = Color.LightCoral;
-                allValid = false;
-            }
-            else
-            {
-                inventoryTxt.BackColor = Color.White;
-            }
-
-            // Price: decimal
-            if (!decimal.TryParse(priceTxt.Text, out _))
-            {
-                priceTxt.BackColor = Color.LightCoral;
-                allValid = false;
-            }
-            else
-            {
-                priceTxt.BackColor = Color.White;
-            }
-
-            // min/max validation
-            bool minValid = int.TryParse(minTxt.Text, out int min);
-            bool maxValid = int.TryParse(maxTxt.Text, out int max);
-
-            // Min validation
-            if (!minValid)
-            {
-                minTxt.BackColor = Color.LightCoral;
-                allValid = false;
-            }
-            else
-            {
-                minTxt.BackColor = Color.White;
-            }
-
-            // Max validation
-            if (!maxValid)
-            {
-                maxTxt.BackColor = Color.LightCoral;
-                allValid = false;
-            }
-            else
-            {
-                maxTxt.BackColor = Color.White;
-            }
-
-            // extra logic: Min should not be greater than Max
-            if (minValid && maxValid && min > max)
-            {
-                minTxt.BackColor = Color.LightCoral;
-                maxTxt.BackColor = Color.LightCoral;
-                allValid = false;
-            }
-
-            if(Product.AssociatedParts.Count == 0)
-            {
-                allValid = false;
-            }
-
-            saveBtn.Enabled = allValid;
-        }
+        
 
         private void ProductSearchBtn_Click(object sender, EventArgs e)
         {
@@ -185,6 +103,7 @@ namespace admaloch_inventory_system
             {
                 int itemId = Convert.ToInt32(activeRow.Cells[0].Value);
                 bool success = Product.RemoveAssociatedPart(itemId);
+                ValidateForm();
                 if (!success)
                 {
                     MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -221,6 +140,14 @@ namespace admaloch_inventory_system
             return  Inventory.AllProducts.Any()
                ? Inventory.AllProducts.Max(p => p.ProductID) + 1
                : 0;
+        }
+
+        private void ValidateForm()
+        {
+            bool sharedValid = FormValidationService.ValidateSharedInputs(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
+            bool hasAssociatedParts = Product.AssociatedParts.Count > 0;
+
+            saveBtn.Enabled = sharedValid && hasAssociatedParts;
         }
     }
 }
