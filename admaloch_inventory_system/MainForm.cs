@@ -84,38 +84,12 @@ namespace admaloch_inventory_system
 
         private void DeletePartBtn_Click(object sender, EventArgs e)
         {
-            DataGridViewRow activeRow = dgvParts.CurrentRow; //get the current row
-            if (dgvParts.CurrentRow != null && dgvParts.CurrentRow.Selected)
-            {
-                int partId = Convert.ToInt32(activeRow.Cells[0].Value);
-                bool success = Inventory.DeletePart(partId);
-                if (!success)
-                { 
-                    MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-            else
-            {
-                MessageBox.Show("No row selected. Please select a row to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+           FormUtils.DeleteRowHelper(dgvParts, "part");//helper func to export repeated logic
         }
 
         private void DeleteProductBtn_Click(object sender, EventArgs e)
         {
-            DataGridViewRow activeRow = dgvProducts.CurrentRow; //get the current row
-            if (dgvProducts.CurrentRow != null && dgvProducts.CurrentRow.Selected)
-            {
-                int productId = Convert.ToInt32(activeRow.Cells[0].Value);
-                bool success = Inventory.RemoveProduct(productId);
-                if (!success)
-                {
-                    MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-            else
-            {
-                MessageBox.Show("No row selected. Please select a row to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            FormUtils.DeleteRowHelper(dgvProducts, "product");//helper func to export repeated logic
         }
 
         private void myBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

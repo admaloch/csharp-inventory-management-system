@@ -1,4 +1,6 @@
-﻿using System;
+﻿using admaloch_inventory_system.Models;
+using admaloch_inventory_system.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -54,6 +56,33 @@ namespace admaloch_inventory_system.Utilities
             }
 
             MessageBox.Show("No matching item found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return false;
+        }
+        public static bool DeleteRowHelper(DataGridView dgv, string type_ )
+        {
+            // needs to be updated for associated products.. associatred products may need first column to have different name like associatedId
+
+            DataGridViewRow activeRow = dgv.CurrentRow; //get the current row
+            if (dgv.CurrentRow != null && dgv.CurrentRow.Selected)
+            {
+                int itemId = Convert.ToInt32(activeRow.Cells[0].Value);//grab id val
+
+                if (type_ == "part")
+                {
+                   return Inventory.DeletePart(itemId);
+                }
+                else if (type_ == "product")
+                {
+                    return Inventory.RemoveProduct(itemId);
+                }
+                else if (type_ == "associated")
+                {
+                    return Product.RemoveAssociatedPart(itemId);
+                }
+                MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            MessageBox.Show("No row selected. Please select a row to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return false;
         }
     }

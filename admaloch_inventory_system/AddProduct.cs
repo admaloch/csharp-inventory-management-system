@@ -75,21 +75,7 @@ namespace admaloch_inventory_system
 
         private void deleteBtn_Click(object sender, EventArgs e)
        {
-            DataGridViewRow activeRow = dgvAssociatedParts.CurrentRow; //get the current row
-            if (dgvAssociatedParts.CurrentRow != null && dgvAssociatedParts.CurrentRow.Selected)
-            {
-                int itemId = Convert.ToInt32(activeRow.Cells[0].Value);
-                bool success = Product.RemoveAssociatedPart(itemId);
-                ValidateForm();
-                if (!success)
-                {
-                    MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-            else
-            {
-                MessageBox.Show("No row selected. Please select a row to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            FormUtils.DeleteRowHelper(dgvAssociatedParts, "associated");//helper func to export repeated logic
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
