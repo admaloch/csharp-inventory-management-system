@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace admaloch_inventory_system.Utilities
 {
-    internal class Utils
+    internal class FormUtils
     {
-
     }
 }
