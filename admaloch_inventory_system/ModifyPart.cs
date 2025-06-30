@@ -1,5 +1,6 @@
 ﻿using admaloch_inventory_system.Models;
 using admaloch_inventory_system.Services;
+using admaloch_inventory_system.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -50,7 +51,7 @@ namespace admaloch_inventory_system
         private void ModifyPart_Load(object sender, EventArgs e)
         {
 
-            ValidateForm();//initial validate -- will make necesary inputs red
+            ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn, saveBtn);//initial validate -- will make necesary inputs red
             companyNameLbl.Visible = false;// hide company name label beacuse in-house is default
 
             // Attach shared listener to radio buttons
@@ -76,13 +77,13 @@ namespace admaloch_inventory_system
             {
                 originLbl.Text = "Company";
             }
-            ValidateForm(); // Revalidate form if needed
+            ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn, saveBtn); // Revalidate form if needed
         }
 
 
         private void SharedInputChanged(object sender, EventArgs e)
         {
-            ValidateForm();
+            ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn, saveBtn);
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
@@ -115,20 +116,11 @@ namespace admaloch_inventory_system
             }
             this.Close();
             MessageBox.Show("Part successfully updated!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void ValidateForm()
-        {
-            bool sharedValid = FormValidationService.ValidateSharedInputs(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
-            bool partSpecificValid = FormValidationService.ValidatePartSpecific(partOriginTxt, inHouseBtn);
-
-            saveBtn.Enabled = sharedValid && partSpecificValid;
         }
     }
 }

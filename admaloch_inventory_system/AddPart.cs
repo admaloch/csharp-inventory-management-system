@@ -1,5 +1,8 @@
-﻿using admaloch_inventory_system.Models;
+﻿using admaloch_inventory_system.Enums;
+using admaloch_inventory_system.Models;
 using admaloch_inventory_system.Services;
+using admaloch_inventory_system.Utilities;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,8 +27,8 @@ namespace admaloch_inventory_system
         private void AddPart_Load(object sender, EventArgs e)
         {
             saveBtn.Enabled = false;//disable save btn unless form validated
-            ValidateForm();//initial validate -- will make necesary inputs red
-            
+            ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn, saveBtn);
+
             // Attach shared listener to radio buttons
             inHouseBtn.CheckedChanged += RadioChanged;
             outsourceBtn.CheckedChanged += RadioChanged;
@@ -39,7 +42,7 @@ namespace admaloch_inventory_system
             partOriginTxt.TextChanged += SharedInputChanged;
 
             //set value of id
-            idTxt.Text = GetNextPartId().ToString();
+            idTxt.Text = Utils.CalcNextItemId(ItemType.Part).ToString();
         }
 
         private void RadioChanged(object sender, EventArgs e)//inhouse vs outsource handler
@@ -52,23 +55,22 @@ namespace admaloch_inventory_system
             {
                 originLbl.Text = "Company";
             }
-            ValidateForm(); 
+            ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn, saveBtn);
         }
 
 
         private void SharedInputChanged(object sender, EventArgs e)//connect inputs into shared listener
         {
-            ValidateForm();
+            ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn, saveBtn);
         }
 
-
-        private void AddPartSaveBtn_Click(object sender, EventArgs e)//
+        private void AddPartSaveBtn_Click(object sender, EventArgs e)
         {
             if (inHouseBtn.Checked)
             {
                 Inventory.AddPart(new Inhouse
                 {
-                    PartID = GetNextPartId(),
+                    PartID = Utils.CalcNextItemId(ItemType.Part),
                     Name = nameTxt.Text,
                     InStock = int.Parse(inventoryTxt.Text),
                     Price = decimal.Parse(priceTxt.Text),
@@ -81,7 +83,7 @@ namespace admaloch_inventory_system
             {
                 Inventory.AddPart(new Outsourced
                 {
-                    PartID = GetNextPartId(),
+                    PartID = Utils.CalcNextItemId(ItemType.Part),
                     Name = nameTxt.Text,
                     InStock = int.Parse(inventoryTxt.Text),
                     Price = decimal.Parse(priceTxt.Text),
@@ -97,21 +99,6 @@ namespace admaloch_inventory_system
         private void cancelBtn_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private int GetNextPartId() //helper to access next id
-        {
-            return Inventory.AllParts.Any()
-                ? Inventory.AllParts.Max(p => p.PartID) + 1
-                : 0;
-        }
-
-        private void ValidateForm()
-        {
-            bool sharedValid = FormValidationService.ValidateSharedInputs(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
-            bool partSpecificValid = FormValidationService.ValidatePartSpecific(partOriginTxt, inHouseBtn);
-
-            saveBtn.Enabled = sharedValid && partSpecificValid;
         }
 
     }

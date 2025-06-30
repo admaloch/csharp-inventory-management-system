@@ -88,6 +88,7 @@
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="Utilities\FormUtils.cs" />
     <Compile Include="Utilities\Utils.cs" />
+    <Compile Include="Utilities\ValidationUtils.cs" />
     <EmbeddedResource Include="AddPart.resx">
       <DependentUpon>AddPart.cs</DependentUpon>
     </EmbeddedResource>

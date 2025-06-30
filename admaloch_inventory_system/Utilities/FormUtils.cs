@@ -100,9 +100,23 @@ namespace admaloch_inventory_system.Utilities
             }
         }
 
-        public static void AddProductBtn()
+        public static void AddAssociatedPart(DataGridView dgv)
         {
-
+            if (dgv.CurrentRow != null)
+            {
+                int partId = Convert.ToInt32(dgv.CurrentRow.Cells[0].Value);
+                Part currentListItem = Inventory.LookupPart(partId);
+                if (currentListItem is Inhouse inhouseItem)
+                {
+                    Product.AddAssociatedPart(inhouseItem);
+                }
+                else if (currentListItem is Outsourced outsourcedItem)
+                {
+                    Product.AddAssociatedPart(outsourcedItem);
+                }
+                return;
+            }
+            MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         
     }

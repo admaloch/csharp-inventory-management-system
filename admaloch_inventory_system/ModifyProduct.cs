@@ -1,4 +1,5 @@
-﻿using admaloch_inventory_system.Models;
+﻿using admaloch_inventory_system.Enums;
+using admaloch_inventory_system.Models;
 using admaloch_inventory_system.Services;
 using admaloch_inventory_system.Utilities;
 using System;
@@ -36,13 +37,12 @@ namespace admaloch_inventory_system
             priceTxt.Text = selectedProduct.Price.ToString();
             maxTxt.Text = selectedProduct.Max.ToString();
             minTxt.Text = selectedProduct.Min.ToString();
-
         }
 
         private void AddPart_Load(object sender, EventArgs e)
         {
             saveBtn.Enabled = false;//disable save btn unless form validated
-            ValidateForm();//initial validate -- will make necesary inputs red
+            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn);//initial validate -- will make necesary inputs red
 
             // Hook shared listener for validation
             nameTxt.TextChanged += SharedInputChanged;
@@ -50,18 +50,16 @@ namespace admaloch_inventory_system
             priceTxt.TextChanged += SharedInputChanged;
             maxTxt.TextChanged += SharedInputChanged;
             minTxt.TextChanged += SharedInputChanged;
-
         }
 
         private void SharedInputChanged(object sender, EventArgs e)
         {
-            ValidateForm();
+            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn);
         }
 
         private void ProductSearchBtn_Click(object sender, EventArgs e)
         {
             FormUtils.LocateAndSelectRowHelper(dgvParts, searchPartsTxt.Text);//helper func to export repeated logic
-
         }
 
         private void addBtn_Click(object sender, EventArgs e)
@@ -78,7 +76,7 @@ namespace admaloch_inventory_system
                 {
                     Product.AddAssociatedPart(outsourcedItem);
                 }
-                ValidateForm();
+                ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn);
                 return;
             }
             MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -86,21 +84,8 @@ namespace admaloch_inventory_system
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            DataGridViewRow activeRow = dgvAssociatedParts.CurrentRow; //get the current row
-            if (dgvAssociatedParts.CurrentRow != null && dgvAssociatedParts.CurrentRow.Selected)
-            {
-                int itemId = Convert.ToInt32(activeRow.Cells[0].Value);
-                bool success = Product.RemoveAssociatedPart(itemId);
-                ValidateForm();
-                if (!success)
-                {
-                    MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-            else
-            {
-                MessageBox.Show("No row selected. Please select a row to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            FormUtils.DeleteRowHelper(dgvAssociatedParts, ItemType.Associated);//helper func to export repeated logic
+            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn);
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
@@ -121,14 +106,6 @@ namespace admaloch_inventory_system
         private void cancelBtn_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void ValidateForm()
-        {
-            bool sharedValid = FormValidationService.ValidateSharedInputs(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
-            bool hasAssociatedParts = Product.AssociatedParts.Count > 0;
-
-            saveBtn.Enabled = sharedValid && hasAssociatedParts;
         }
     }
 }
