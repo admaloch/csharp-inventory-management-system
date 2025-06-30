@@ -57,22 +57,8 @@ namespace admaloch_inventory_system
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-            if (dgvParts.CurrentRow != null)
-            {
-                int partId = Convert.ToInt32(dgvParts.CurrentRow.Cells[0].Value);
-                Part currentListItem = Inventory.LookupPart(partId);
-                if (currentListItem is Inhouse inhouseItem)
-                {
-                    selectedProduct.AddAssociatedPart(inhouseItem);
-                }
-                else if (currentListItem is Outsourced outsourcedItem)
-                {
-                    selectedProduct.AddAssociatedPart(outsourcedItem);
-                }
-                ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, selectedProduct);
-                return;
-            }
-            MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            FormUtils.AddAssociatedPartHelper(dgvParts, selectedProduct);
+            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, selectedProduct);
         }
 
         private void deleteBtn_Click(object sender, EventArgs e)

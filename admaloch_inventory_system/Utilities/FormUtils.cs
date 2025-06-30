@@ -1,6 +1,7 @@
-﻿using admaloch_inventory_system.Models;
+﻿using admaloch_inventory_system.Enums;
+using admaloch_inventory_system.Models;
 using admaloch_inventory_system.Services;
-using admaloch_inventory_system.Enums;
+using System;
 using System.Windows.Forms;
 
 namespace admaloch_inventory_system.Utilities
@@ -71,6 +72,28 @@ namespace admaloch_inventory_system.Utilities
                 return false;
             }
         }
+
+        public static void AddAssociatedPartHelper(DataGridView dgv, Product product)
+        {
+            if (dgv.CurrentRow != null)
+            {
+                int partId = Utils.GrabDgvRowId(dgv);
+                Part currentListItem = Inventory.LookupPart(partId);
+
+                if (currentListItem is Inhouse inhouseItem)
+                    product.AddAssociatedPart(inhouseItem);
+                else if (currentListItem is Outsourced outsourcedItem)
+                    product.AddAssociatedPart(outsourcedItem);
+                else
+                    MessageBox.Show("Invalid part type.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+
         public static bool ModifyBtnClickHelper(DataGridView dgv, ItemType type)//click dgv row and open mod form
         {
             if (Utils.IsRowSelected(dgv))//check if dgv row is currently selected
@@ -107,6 +130,7 @@ namespace admaloch_inventory_system.Utilities
                 return false;
             }
         }
+
     }
 }
 
