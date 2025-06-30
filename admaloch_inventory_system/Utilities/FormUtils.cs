@@ -39,7 +39,7 @@ namespace admaloch_inventory_system.Utilities
             MessageBox.Show("No matching item found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return false;
         }
-        public static bool DeleteRowHelper(DataGridView dgv, ItemType type )
+        public static bool DeleteProductAndPartRowHelper(DataGridView dgv, ItemType type )
         {
             if (Utils.IsRowSelected(dgv)) //check if a row is currently selected
             {
@@ -51,8 +51,6 @@ namespace admaloch_inventory_system.Utilities
                         return Inventory.DeletePart(itemId);
                     case ItemType.Product:
                         return Inventory.RemoveProduct(itemId);
-                    case ItemType.Associated:
-                        return Product.RemoveAssociatedPart(itemId);
                     default:
                         break;
                 }
@@ -62,6 +60,27 @@ namespace admaloch_inventory_system.Utilities
             MessageBox.Show("No row selected. Please select a row to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return false;
         }
+
+        public static bool DeleteAssociatedPartsRowHelper(DataGridView dgv, Product product )
+        {
+            if (Utils.IsRowSelected(dgv))
+            {
+                int itemId = Utils.GrabDgvRowId(dgv);
+                bool success = product.RemoveAssociatedPart(itemId);
+                if (!success)
+                {
+                    MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("No row selected. Please select a row to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+        }
+
 
         public static bool ModifyBtnClickHelper(DataGridView dgv, ItemType type)//click dgv row and open mod form
         {
@@ -100,24 +119,7 @@ namespace admaloch_inventory_system.Utilities
             }
         }
 
-        public static void AddAssociatedPart(DataGridView dgv)
-        {
-            if (dgv.CurrentRow != null)
-            {
-                int partId = Convert.ToInt32(dgv.CurrentRow.Cells[0].Value);
-                Part currentListItem = Inventory.LookupPart(partId);
-                if (currentListItem is Inhouse inhouseItem)
-                {
-                    Product.AddAssociatedPart(inhouseItem);
-                }
-                else if (currentListItem is Outsourced outsourcedItem)
-                {
-                    Product.AddAssociatedPart(outsourcedItem);
-                }
-                return;
-            }
-            MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
+       
         
     }
 }

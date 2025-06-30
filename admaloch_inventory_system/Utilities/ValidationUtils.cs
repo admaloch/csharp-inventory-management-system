@@ -11,10 +11,10 @@ namespace admaloch_inventory_system.Utilities
 {
     internal class ValidationUtils
     {
-        public static void ValidateProductForm(TextBox nameTxt, TextBox inventoryTxt, TextBox priceTxt, TextBox minTxt, TextBox maxTxt, Button saveBtn)
+        public static void ValidateProductForm(TextBox nameTxt, TextBox inventoryTxt, TextBox priceTxt, TextBox minTxt, TextBox maxTxt, Button saveBtn, Product product)
         {
             bool sharedValid = ValidateSharedInputs(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
-            bool hasAssociatedParts = Product.AssociatedParts.Count > 0;
+            bool hasAssociatedParts = product.AssociatedParts.Count > 0;
             saveBtn.Enabled = sharedValid && hasAssociatedParts;
         }
         public static void ValidatePartForm(TextBox nameTxt, TextBox inventoryTxt, TextBox priceTxt, TextBox minTxt, TextBox maxTxt, TextBox partOriginTxt, RadioButton inHouseBtn, Button saveBtn)

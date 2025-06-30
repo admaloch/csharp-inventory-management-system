@@ -53,12 +53,12 @@ namespace admaloch_inventory_system
 
         private void DeletePartBtn_Click(object sender, EventArgs e)
         {
-           FormUtils.DeleteRowHelper(dgvParts, ItemType.Part);//helper func to export repeated logic
+           FormUtils.DeleteProductAndPartRowHelper(dgvParts, ItemType.Part);//helper func to export repeated logic
         }
 
         private void DeleteProductBtn_Click(object sender, EventArgs e)
         {
-            FormUtils.DeleteRowHelper(dgvProducts, ItemType.Product);//helper func to export repeated logic
+            FormUtils.DeleteProductAndPartRowHelper(dgvProducts, ItemType.Product);//helper func to export repeated logic
         }
 
         private void myBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

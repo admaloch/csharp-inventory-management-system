@@ -20,15 +20,15 @@ namespace admaloch_inventory_system
 
         public ModifyProduct(Product product)
         {
-            selectedProduct = product;
-            InitializeComponent();
-            this.Load += AddPart_Load;
-            dgvParts.DataSource = Inventory.AllParts;
-            dgvAssociatedParts.DataSource = Product.AssociatedParts;
+			InitializeComponent();
+			selectedProduct = product;
+            dgvParts.DataSource = Inventory.AllParts; //set data source for DGVs
+            dgvAssociatedParts.DataSource = selectedProduct.AssociatedParts;
             LoadProductData();
-        }
+			this.Load += AddPart_Load;
+		}
 
-        private void LoadProductData()
+		private void LoadProductData()
         {
             //load the current item data from the main form
             idTxt.Text = selectedProduct.ProductID.ToString();
@@ -42,9 +42,10 @@ namespace admaloch_inventory_system
         private void AddPart_Load(object sender, EventArgs e)
         {
             saveBtn.Enabled = false;//disable save btn unless form validated
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn);//initial validate -- will make necesary inputs red
+			//initial validate -- will make necesary inputs red
+			ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, selectedProduct);
 
-            // Hook shared listener for validation
+            // Hook shared listener for input validation
             nameTxt.TextChanged += SharedInputChanged;
             inventoryTxt.TextChanged += SharedInputChanged;
             priceTxt.TextChanged += SharedInputChanged;
@@ -54,7 +55,7 @@ namespace admaloch_inventory_system
 
         private void SharedInputChanged(object sender, EventArgs e)
         {
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn);
+            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, selectedProduct);
         }
 
         private void ProductSearchBtn_Click(object sender, EventArgs e)
@@ -70,13 +71,13 @@ namespace admaloch_inventory_system
                 Part currentListItem = Inventory.LookupPart(partId);
                 if (currentListItem is Inhouse inhouseItem)
                 {
-                    Product.AddAssociatedPart(inhouseItem);
+                    selectedProduct.AddAssociatedPart(inhouseItem);
                 }
                 else if (currentListItem is Outsourced outsourcedItem)
                 {
-                    Product.AddAssociatedPart(outsourcedItem);
+                    selectedProduct.AddAssociatedPart(outsourcedItem);
                 }
-                ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn);
+                ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, selectedProduct);
                 return;
             }
             MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -84,13 +85,13 @@ namespace admaloch_inventory_system
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            FormUtils.DeleteRowHelper(dgvAssociatedParts, ItemType.Associated);//helper func to export repeated logic
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn);
+            FormUtils.DeleteAssociatedPartsRowHelper(dgvAssociatedParts, selectedProduct);
+            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, selectedProduct);
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            Inventory.UpdateProduct(selectedProduct.ProductID, new Product
+            var updatedProduct = new Product
             {
                 ProductID = selectedProduct.ProductID,
                 Name = nameTxt.Text,
@@ -98,10 +99,18 @@ namespace admaloch_inventory_system
                 InStock = int.Parse(inventoryTxt.Text),
                 Min = int.Parse(minTxt.Text),
                 Max = int.Parse(maxTxt.Text),
-            });
+            };
+
+            // Transfer associated parts
+            foreach (Part part in selectedProduct.AssociatedParts)
+            {
+                updatedProduct.AddAssociatedPart(part);
+            }
+            Inventory.UpdateProduct(selectedProduct.ProductID, updatedProduct);
             this.Close();
             MessageBox.Show("Product successfully updated", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
         private void cancelBtn_Click(object sender, EventArgs e)
         {

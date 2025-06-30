@@ -183,7 +183,5 @@ namespace admaloch_inventory_system.Services
                 );
             }
         }
-
-
     }
 }

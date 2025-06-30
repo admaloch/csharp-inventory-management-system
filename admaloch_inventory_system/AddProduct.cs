@@ -40,7 +40,7 @@ namespace admaloch_inventory_system
             saveBtn.Enabled = false; //disable save btn unless form validated
 
             //initial validate -- will make necesary inputs red
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn);
+            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, newProduct);
 
             nameTxt.TextChanged += SharedInputChanged; //add inuts to shared listener for validation
             inventoryTxt.TextChanged += SharedInputChanged;
@@ -53,7 +53,7 @@ namespace admaloch_inventory_system
 
         private void SharedInputChanged(object sender, EventArgs e)
         {
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn);
+            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, newProduct);
         }
 
         private void ProductSearchBtn_Click(object sender, EventArgs e)
@@ -80,13 +80,13 @@ namespace admaloch_inventory_system
                 MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn);
+            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, newProduct);
         }
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
-            FormUtils.DeleteRowHelper(dgvAssociatedParts, ItemType.Associated);//helper func to export repeated logic
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn);
+            FormUtils.DeleteAssociatedPartsRowHelper(dgvAssociatedParts, newProduct);
+            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, newProduct);
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
