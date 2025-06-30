@@ -18,16 +18,24 @@ namespace admaloch_inventory_system
 {
     public partial class AddProduct : Form
     {
+        private Product newProduct;
+
         public AddProduct()
         {
             InitializeComponent();
             this.Load += AddPart_Load; //run some code on load
+
         }
 
         private void AddPart_Load(object sender, EventArgs e)
         {
+            newProduct = new Product//instantiate a new product class
+            {
+                ProductID = Utils.CalcNextItemId(ItemType.Product)
+            };
+
             dgvParts.DataSource = Inventory.AllParts; //connect data to dvg
-            dgvAssociatedParts.DataSource = Product.AssociatedParts;
+            dgvAssociatedParts.DataSource = newProduct.AssociatedParts;
 
             saveBtn.Enabled = false; //disable save btn unless form validated
 
@@ -55,7 +63,23 @@ namespace admaloch_inventory_system
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-            FormUtils.AddAssociatedPart(dgvParts);
+            if (dgvParts.CurrentRow != null)
+            {
+                int partId = Convert.ToInt32(dgvParts.CurrentRow.Cells[0].Value);
+                Part currentListItem = Inventory.LookupPart(partId);
+
+                if (currentListItem is Inhouse inhouseItem)
+                    newProduct.AddAssociatedPart(inhouseItem);
+                else if (currentListItem is Outsourced outsourcedItem)
+                    newProduct.AddAssociatedPart(outsourcedItem);
+                else
+                    MessageBox.Show("Invalid part type.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show("No matching part found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
             ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn);
         }
 
@@ -67,15 +91,13 @@ namespace admaloch_inventory_system
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            Inventory.AddProduct(new Product
-            {
-                ProductID = Utils.CalcNextItemId(ItemType.Product),
-                Name = nameTxt.Text,
-                Price = decimal.Parse(priceTxt.Text),
-                InStock = int.Parse(inventoryTxt.Text),
-                Min = int.Parse(minTxt.Text),
-                Max = int.Parse(maxTxt.Text),
-            });
+            // Update newProduct's properties from form inputs
+            newProduct.Name = nameTxt.Text;
+            newProduct.Price = decimal.Parse(priceTxt.Text);
+            newProduct.InStock = int.Parse(inventoryTxt.Text);
+            newProduct.Min = int.Parse(minTxt.Text);
+            newProduct.Max = int.Parse(maxTxt.Text);
+            Inventory.AddProduct(newProduct);
             this.Close();
             MessageBox.Show("Product successfully created!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

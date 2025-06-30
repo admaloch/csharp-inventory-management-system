@@ -17,20 +17,20 @@ namespace admaloch_inventory_system.Models
         public int Min { get; set; }
         public int Max { get; set; }
 
-        public static BindingList<Part> AssociatedParts { get; set; } = new BindingList<Part>();
+        public BindingList<Part> AssociatedParts { get; } = new BindingList<Part>();
 
-        public static void AddAssociatedPart(Part part)
+        // Instance methods now
+        public void AddAssociatedPart(Part part)
         {
             AssociatedParts.Add(part);
         }
 
-        public static Part LookupAssociatedPart(int partId)
+        public Part LookupAssociatedPart(int partId)
         {
-            var part = AssociatedParts.FirstOrDefault(p => p.PartID == partId);
-            return part;
+            return AssociatedParts.FirstOrDefault(p => p.PartID == partId);
         }
 
-        public static bool RemoveAssociatedPart(int partId)
+        public bool RemoveAssociatedPart(int partId)
         {
             var partToRemove = LookupAssociatedPart(partId);
             if (partToRemove != null)
@@ -44,5 +44,6 @@ namespace admaloch_inventory_system.Models
             }
         }
     }
+
 
 }
