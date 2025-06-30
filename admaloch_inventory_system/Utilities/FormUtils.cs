@@ -2,6 +2,7 @@
 using admaloch_inventory_system.Services;
 using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -84,6 +85,43 @@ namespace admaloch_inventory_system.Utilities
             }
             MessageBox.Show("No row selected. Please select a row to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return false;
+        }
+
+        public static bool ModifyBtnClickHelper(DataGridView dgv, string type_)//handle click mod btn and grab curr row and sendto mod form
+        {
+            if (dgv.SelectedRows.Count > 0 && //check if an item is sleected
+                !dgv.SelectedRows[0].IsNewRow)
+            {
+                int itemId = Convert.ToInt32(dgv.CurrentRow.Cells[0].Value);// grab first column value -- PartID or ProductID
+
+                    if(type_ == "product") 
+                    {
+                        Product selectedProduct = Inventory.LookupProduct(itemId);
+                        if (selectedProduct != null)
+                        {
+                            ModifyProduct modifyProductForm = new ModifyProduct(selectedProduct);
+                            modifyProductForm.Show();
+                            return true;
+                        }
+                    }
+                    else if (type_ == "part")
+                    {
+                        Part selectedPart = Inventory.LookupPart(itemId);
+                        if (selectedPart != null)
+                        {
+                            ModifyPart modifyPartForm = new ModifyPart(selectedPart);
+                            modifyPartForm.Show();
+                            return true;
+                        }
+                    }
+                MessageBox.Show($"Unable to modify {type_}", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            else
+            {
+                MessageBox.Show($"Please select a {type_} to modify.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
         }
     }
 }

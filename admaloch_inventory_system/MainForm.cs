@@ -33,53 +33,20 @@ namespace admaloch_inventory_system
             AddPart frm = new AddPart();
             frm.Show(); 
         }
-
-       
-
-        private void ModifyPartBtn_Click(object sender, EventArgs e)
-        {
-            if (dgvParts.SelectedRows.Count > 0 && //check if an item is sleected
-                !dgvParts.SelectedRows[0].IsNewRow)
-            {
-                int partId = Convert.ToInt32(dgvParts.CurrentRow.Cells["PartID"].Value);
-                Part selectedPart = Inventory.LookupPart(partId);
-
-                if (selectedPart != null)
-                {
-                    ModifyPart modifyForm = new ModifyPart(selectedPart);
-                    modifyForm.Show();
-                }
-            }
-            else
-            {
-                MessageBox.Show( "Please select a part to modify.","No Selection",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-            }
-        }
-
         private void AddProductBtn_Click(object sender, EventArgs e)
         {
             AddProduct frm = new AddProduct();
             frm.Show();
         }
 
+        private void ModifyPartBtn_Click(object sender, EventArgs e)
+        {
+            FormUtils.ModifyBtnClickHelper(dgvParts, "part");
+        }
+
         private void ModifyProductBtn_Click(object sender, EventArgs e)
         {
-            if (dgvProducts.SelectedRows.Count > 0 && //check if an item is sleected
-         !dgvProducts.SelectedRows[0].IsNewRow)
-            {
-                int productId = Convert.ToInt32(dgvProducts.CurrentRow.Cells["ProductID"].Value);
-                Product selectedProduct = Inventory.LookupProduct(productId);
-
-                if (selectedProduct != null)
-                {
-                    ModifyProduct modifyForm = new ModifyProduct(selectedProduct);
-                    modifyForm.Show();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select a product to modify.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            FormUtils.ModifyBtnClickHelper(dgvProducts, "product");
         }
 
         private void DeletePartBtn_Click(object sender, EventArgs e)
@@ -101,7 +68,6 @@ namespace admaloch_inventory_system
         {
             dgvProducts.ClearSelection();//prevent first row from being default active
         }
-
 
         private void searchPartsBtn_Click(object sender, EventArgs e)
         {
