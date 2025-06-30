@@ -66,10 +66,9 @@ namespace admaloch_inventory_system
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-            DataGridViewRow activeRow = dgvParts.CurrentRow;
-            if (activeRow != null)
+            if (dgvParts.CurrentRow != null)
             {
-                int partId = Convert.ToInt32(activeRow.Cells[0].Value);
+                int partId = Convert.ToInt32(dgvParts.CurrentRow.Cells[0].Value);
                 Part currentListItem = Inventory.LookupPart(partId);
                 if (currentListItem is Inhouse inhouseItem)
                 {

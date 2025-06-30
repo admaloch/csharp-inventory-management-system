@@ -1,5 +1,7 @@
 ﻿using admaloch_inventory_system.Models;
 using admaloch_inventory_system.Services;
+using admaloch_inventory_system.Enums;
+
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
@@ -12,27 +14,7 @@ namespace admaloch_inventory_system.Utilities
 {
     public static class FormUtils
     {
-        public static bool IsTextBoxEmpty(TextBox txt, string message = "Please enter a value.")
-        {
-            if (string.IsNullOrWhiteSpace(txt.Text))
-            {
-                MessageBox.Show(message, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                txt.Focus();
-                return true;
-            }
 
-            return false;
-        }
-
-        public static bool LocateSearchTerm(DataGridViewRow row, string searchTerm)
-        {
-            if(row.Cells[1].Value != null &&
-            row.Cells[1].Value.ToString().ToLower().Contains(searchTerm))
-            {
-                return true;
-            }
-            return false;
-        }
 
         public static bool LocateAndSelectRowHelper(DataGridView dgv, string searchInput, int columnIndex = 1)
         {
@@ -44,11 +26,9 @@ namespace admaloch_inventory_system.Utilities
                 return false;
             }
 
-            string loweredTerm = searchTerm.Trim().ToLower();
-
             foreach (DataGridViewRow row in dgv.Rows)
             {
-                if (LocateSearchTerm(row, searchTerm))
+                if (Utils.LocateSearchTerm(row, searchTerm))
                 {
                     row.Selected = true;
                     dgv.CurrentCell = row.Cells[columnIndex];
@@ -59,26 +39,22 @@ namespace admaloch_inventory_system.Utilities
             MessageBox.Show("No matching item found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return false;
         }
-        public static bool DeleteRowHelper(DataGridView dgv, string type_ )
+        public static bool DeleteRowHelper(DataGridView dgv, ItemType type )
         {
-            // needs to be updated for associated products.. associatred products may need first column to have different name like associatedId
-
-            DataGridViewRow activeRow = dgv.CurrentRow; //get the current row
-            if (dgv.CurrentRow != null && dgv.CurrentRow.Selected)
+            if (Utils.IsRowSelected(dgv)) //check if a row is currently selected
             {
-                int itemId = Convert.ToInt32(activeRow.Cells[0].Value);//grab id val
+                int itemId = Utils.GrabDgvRowId(dgv);//grab row id val
 
-                if (type_ == "part")
+                switch (type)//determine method depending on ItemType
                 {
-                   return Inventory.DeletePart(itemId);
-                }
-                else if (type_ == "product")
-                {
-                    return Inventory.RemoveProduct(itemId);
-                }
-                else if (type_ == "associated")
-                {
-                    return Product.RemoveAssociatedPart(itemId);
+                    case ItemType.Part:
+                        return Inventory.DeletePart(itemId);
+                    case ItemType.Product:
+                        return Inventory.RemoveProduct(itemId);
+                    case ItemType.Associated:
+                        return Product.RemoveAssociatedPart(itemId);
+                    default:
+                        break;
                 }
                 MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
@@ -87,25 +63,15 @@ namespace admaloch_inventory_system.Utilities
             return false;
         }
 
-        public static bool ModifyBtnClickHelper(DataGridView dgv, string type_)//handle click mod btn and grab curr row and sendto mod form
+        public static bool ModifyBtnClickHelper(DataGridView dgv, ItemType type)//click dgv row and open mod form
         {
-            if (dgv.SelectedRows.Count > 0 && //check if an item is sleected
-                !dgv.SelectedRows[0].IsNewRow)
+            if (Utils.IsRowSelected(dgv))//check if dgv row is currently selected
             {
-                int itemId = Convert.ToInt32(dgv.CurrentRow.Cells[0].Value);// grab first column value -- PartID or ProductID
+                int itemId = Utils.GrabDgvRowId(dgv);// grab row id val
 
-                    if(type_ == "product") 
-                    {
-                        Product selectedProduct = Inventory.LookupProduct(itemId);
-                        if (selectedProduct != null)
-                        {
-                            ModifyProduct modifyProductForm = new ModifyProduct(selectedProduct);
-                            modifyProductForm.Show();
-                            return true;
-                        }
-                    }
-                    else if (type_ == "part")
-                    {
+                switch(type)
+                {
+                    case ItemType.Part:
                         Part selectedPart = Inventory.LookupPart(itemId);
                         if (selectedPart != null)
                         {
@@ -113,16 +79,32 @@ namespace admaloch_inventory_system.Utilities
                             modifyPartForm.Show();
                             return true;
                         }
-                    }
-                MessageBox.Show($"Unable to modify {type_}", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        break;
+                    case ItemType.Product:
+                        Product selectedProduct = Inventory.LookupProduct(itemId);
+                        if (selectedProduct != null)
+                        {
+                            ModifyProduct modifyProductForm = new ModifyProduct(selectedProduct);
+                            modifyProductForm.Show();
+                            return true;
+                        }
+                        break;
+                } 
+                MessageBox.Show($"Unable to modify {type}", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             else
             {
-                MessageBox.Show($"Please select a {type_} to modify.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"Please select a {type} to modify.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
         }
+
+        public static void AddProductBtn()
+        {
+
+        }
+        
     }
 }
 

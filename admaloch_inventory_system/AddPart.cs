@@ -61,6 +61,7 @@ namespace admaloch_inventory_system
             ValidateForm();
         }
 
+
         private void AddPartSaveBtn_Click(object sender, EventArgs e)//
         {
             if (inHouseBtn.Checked)

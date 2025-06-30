@@ -1,6 +1,8 @@
 ﻿using admaloch_inventory_system.Models;
 using admaloch_inventory_system.Services;
 using admaloch_inventory_system.Utilities;
+using admaloch_inventory_system.Enums;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,22 +43,22 @@ namespace admaloch_inventory_system
 
         private void ModifyPartBtn_Click(object sender, EventArgs e)
         {
-            FormUtils.ModifyBtnClickHelper(dgvParts, "part");
+            FormUtils.ModifyBtnClickHelper(dgvParts, ItemType.Part);
         }
 
         private void ModifyProductBtn_Click(object sender, EventArgs e)
         {
-            FormUtils.ModifyBtnClickHelper(dgvProducts, "product");
+            FormUtils.ModifyBtnClickHelper(dgvProducts, ItemType.Product);
         }
 
         private void DeletePartBtn_Click(object sender, EventArgs e)
         {
-           FormUtils.DeleteRowHelper(dgvParts, "part");//helper func to export repeated logic
+           FormUtils.DeleteRowHelper(dgvParts, ItemType.Part);//helper func to export repeated logic
         }
 
         private void DeleteProductBtn_Click(object sender, EventArgs e)
         {
-            FormUtils.DeleteRowHelper(dgvProducts, "product");//helper func to export repeated logic
+            FormUtils.DeleteRowHelper(dgvProducts, ItemType.Product);//helper func to export repeated logic
         }
 
         private void myBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

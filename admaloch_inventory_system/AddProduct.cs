@@ -1,6 +1,7 @@
 ﻿using admaloch_inventory_system.Models;
 using admaloch_inventory_system.Services;
 using admaloch_inventory_system.Utilities;
+using admaloch_inventory_system.Enums;
 
 using System;
 using System.Collections.Generic;
@@ -74,8 +75,8 @@ namespace admaloch_inventory_system
         }
 
         private void deleteBtn_Click(object sender, EventArgs e)
-       {
-            FormUtils.DeleteRowHelper(dgvAssociatedParts, "associated");//helper func to export repeated logic
+        {
+            FormUtils.DeleteRowHelper(dgvAssociatedParts, ItemType.Associated);//helper func to export repeated logic
         }
 
         private void saveBtn_Click(object sender, EventArgs e)

@@ -59,6 +59,7 @@
     <Compile Include="AddProduct.Designer.cs">
       <DependentUpon>AddProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Enums\Enums.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +87,7 @@
     <Compile Include="Services\Inventory.cs" />
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="Utilities\FormUtils.cs" />
+    <Compile Include="Utilities\Utils.cs" />
     <EmbeddedResource Include="AddPart.resx">
       <DependentUpon>AddPart.cs</DependentUpon>
     </EmbeddedResource>

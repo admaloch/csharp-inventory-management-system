@@ -49,8 +49,6 @@ namespace admaloch_inventory_system
 
         private void ModifyPart_Load(object sender, EventArgs e)
         {
-            //grab values and set them
-
 
             ValidateForm();//initial validate -- will make necesary inputs red
             companyNameLbl.Visible = false;// hide company name label beacuse in-house is default
@@ -66,8 +64,6 @@ namespace admaloch_inventory_system
             maxTxt.TextChanged += SharedInputChanged;
             minTxt.TextChanged += SharedInputChanged;
             partOriginTxt.TextChanged += SharedInputChanged;
-
-
         }
 
         private void RadioChanged(object sender, EventArgs e)
@@ -75,15 +71,11 @@ namespace admaloch_inventory_system
             if (inHouseBtn.Checked)
             {
                 originLbl.Text = "Machine ID";
-
-
             }
             else if (outsourceBtn.Checked)
             {
                 originLbl.Text = "Company";
-
             }
-
             ValidateForm(); // Revalidate form if needed
         }
 
