@@ -1,18 +1,8 @@
-﻿using admaloch_inventory_system.Models;
-using admaloch_inventory_system.Services;
+﻿using admaloch_inventory_system.Services;
 using admaloch_inventory_system.Utilities;
 using admaloch_inventory_system.Enums;
-
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
 
 
 namespace admaloch_inventory_system
@@ -35,6 +25,7 @@ namespace admaloch_inventory_system
             AddPart frm = new AddPart();
             frm.Show(); 
         }
+
         private void AddProductBtn_Click(object sender, EventArgs e)
         {
             AddProduct frm = new AddProduct();

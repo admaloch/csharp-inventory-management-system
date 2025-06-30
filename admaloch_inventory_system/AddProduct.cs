@@ -2,16 +2,7 @@
 using admaloch_inventory_system.Services;
 using admaloch_inventory_system.Utilities;
 using admaloch_inventory_system.Enums;
-
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace admaloch_inventory_system
@@ -24,7 +15,6 @@ namespace admaloch_inventory_system
         {
             InitializeComponent();
             this.Load += AddPart_Load; //run some code on load
-
         }
 
         private void AddPart_Load(object sender, EventArgs e)

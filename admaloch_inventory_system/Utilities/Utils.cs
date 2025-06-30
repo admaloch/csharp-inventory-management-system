@@ -1,19 +1,13 @@
 ﻿using admaloch_inventory_system.Enums;
-using admaloch_inventory_system.Models;
 using admaloch_inventory_system.Services;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace admaloch_inventory_system.Utilities
 {
     internal class Utils
     {
-
         public static bool IsTextBoxEmpty(TextBox txt, string message = "Please enter a value.")
         {
             if (string.IsNullOrWhiteSpace(txt.Text))
@@ -22,7 +16,6 @@ namespace admaloch_inventory_system.Utilities
                 txt.Focus();
                 return true;
             }
-
             return false;
         }
         public static bool LocateSearchTerm(DataGridViewRow row, string searchTerm)

@@ -2,13 +2,6 @@
 using admaloch_inventory_system.Services;
 using admaloch_inventory_system.Utilities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace admaloch_inventory_system
@@ -45,12 +38,10 @@ namespace admaloch_inventory_system
                 originLbl.Text = "  Company";
                 partOriginTxt.Text = outsourcedPart.CompanyName;
             }
-
         }
 
         private void ModifyPart_Load(object sender, EventArgs e)
         {
-
             ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn, saveBtn);//initial validate -- will make necesary inputs red
             companyNameLbl.Visible = false;// hide company name label beacuse in-house is default
 
@@ -79,7 +70,6 @@ namespace admaloch_inventory_system
             }
             ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn, saveBtn); // Revalidate form if needed
         }
-
 
         private void SharedInputChanged(object sender, EventArgs e)
         {

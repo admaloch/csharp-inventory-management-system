@@ -1,10 +1,5 @@
 ﻿using admaloch_inventory_system.Models;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace admaloch_inventory_system.Utilities
@@ -49,10 +44,8 @@ namespace admaloch_inventory_system.Utilities
                 maxTxt.BackColor = Color.LightCoral;
                 allValid = false;
             }
-
             return allValid;
         }
-
         public static bool ValidatePartSpecific(TextBox partOriginTxt, RadioButton inHouseBtn)
         {
             bool valid;
@@ -69,12 +62,10 @@ namespace admaloch_inventory_system.Utilities
             SetValidationState(valid, partOriginTxt);
             return valid;
         }
-
         public static bool ValidateProductSpecific(BindingSource associatedPartsSource)
         {
             return associatedPartsSource.Count > 0;
         }
-
         private static bool SetValidationState(bool condition, TextBox control)
         {
             control.BackColor = condition ? Color.White : Color.LightCoral;

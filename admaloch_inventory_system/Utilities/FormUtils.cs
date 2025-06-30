@@ -1,21 +1,12 @@
 ﻿using admaloch_inventory_system.Models;
 using admaloch_inventory_system.Services;
 using admaloch_inventory_system.Enums;
-
-using System;
-using System.Collections.Generic;
-using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace admaloch_inventory_system.Utilities
 {
     public static class FormUtils
     {
-
-
         public static bool LocateAndSelectRowHelper(DataGridView dgv, string searchInput, int columnIndex = 1)
         {
             string searchTerm = searchInput.Trim().ToLower();
@@ -80,8 +71,6 @@ namespace admaloch_inventory_system.Utilities
                 return false;
             }
         }
-
-
         public static bool ModifyBtnClickHelper(DataGridView dgv, ItemType type)//click dgv row and open mod form
         {
             if (Utils.IsRowSelected(dgv))//check if dgv row is currently selected
@@ -118,9 +107,6 @@ namespace admaloch_inventory_system.Utilities
                 return false;
             }
         }
-
-       
-        
     }
 }
 

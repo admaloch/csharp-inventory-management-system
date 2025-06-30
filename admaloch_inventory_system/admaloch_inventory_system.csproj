@@ -85,7 +85,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Inventory.cs" />
-    <Compile Include="Services\ValidationService.cs" />
     <Compile Include="Utilities\FormUtils.cs" />
     <Compile Include="Utilities\Utils.cs" />
     <Compile Include="Utilities\ValidationUtils.cs" />

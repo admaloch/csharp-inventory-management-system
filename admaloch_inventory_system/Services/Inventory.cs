@@ -1,13 +1,7 @@
 ﻿using admaloch_inventory_system.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
-
 
 namespace admaloch_inventory_system.Services
 {
@@ -121,7 +115,6 @@ namespace admaloch_inventory_system.Services
                 return false;
             }
         }
-
         public static void UpdateProduct(int productId, Product product)
         {
             // Find index of the product to update
