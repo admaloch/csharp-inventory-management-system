@@ -94,10 +94,7 @@ namespace admaloch_inventory_system.Utilities
             SetValidationState(valid, partOriginTxt);
             return valid;
         }
-        public static bool ValidateProductSpecific(BindingSource associatedPartsSource)
-        {
-            return associatedPartsSource.Count > 0;
-        }
+
         private static bool SetValidationState(bool condition, TextBox control)
         {
             control.BackColor = condition ? Color.White : Color.LightCoral;

@@ -52,7 +52,7 @@ namespace admaloch_inventory_system.Utilities
                     Product currentProduct = Inventory.LookupProduct(itemId);
                     if (currentProduct.AssociatedParts.Count > 0)
                     {
-                        MessageBox.Show("Product has associated parts", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Remove associated parts before deleting", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     return Inventory.RemoveProduct(itemId);
@@ -69,6 +69,7 @@ namespace admaloch_inventory_system.Utilities
 
         public static bool DeleteAssociatedPartsRowHelper(DataGridView dgv, Product product )
         {
+            //confirm user wants to delete
             if (!Utils.YesorNoMessageHelper("Confirm Deletion", "Are you sure you want to remove the associated part?"))
             {
                 return false;
