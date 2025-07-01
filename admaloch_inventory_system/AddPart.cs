@@ -56,12 +56,13 @@ namespace admaloch_inventory_system
 
         private void AddPartSaveBtn_Click(object sender, EventArgs e)
         {
-            bool isValidated = ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
-            if (!isValidated)
+            var (isValid, errorMessage) = ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn);
+            if (!isValid)
             {
-                ValidationUtils.ValidationErrMsg(inventoryTxt, minTxt, maxTxt);
+                MessageBox.Show(errorMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             if (inHouseBtn.Checked)
             {
                 Inventory.AddPart(new Inhouse

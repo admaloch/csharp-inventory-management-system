@@ -66,10 +66,10 @@ namespace admaloch_inventory_system
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            bool isValidated = ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
-            if (!isValidated) 
+            var (isValid, errorMessage) = ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
+            if (!isValid)
             {
-                ValidationUtils.ValidationErrMsg( inventoryTxt,  minTxt, maxTxt);
+                MessageBox.Show(errorMessage, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             var updatedProduct = new Product
