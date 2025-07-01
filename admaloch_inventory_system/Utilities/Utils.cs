@@ -18,12 +18,23 @@ namespace admaloch_inventory_system.Utilities
             }
             return false;
         }
-        public static bool LocateSearchTerm(DataGridViewRow row, string searchTerm)
+        public static bool LocateSearchTerm(DataGridViewRow row, string searchTerm, int idx)
         {
-            if (row.Cells[1].Value != null &&
-            row.Cells[1].Value.ToString().ToLower().Contains(searchTerm))
+            return row.Cells[idx].Value != null &&
+                   row.Cells[idx].Value.ToString()
+                       .IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public static bool SelectSearchedRow(DataGridView dgv, string searchTerm, int idx)
+        {
+            foreach (DataGridViewRow row in dgv.Rows)
             {
-                return true;
+                if (LocateSearchTerm(row, searchTerm, idx))
+                {
+                    row.Selected = true;
+                    dgv.CurrentCell = row.Cells[idx];
+                    return true;
+                }
             }
             return false;
         }

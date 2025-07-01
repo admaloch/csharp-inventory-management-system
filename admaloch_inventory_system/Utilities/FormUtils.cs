@@ -8,7 +8,7 @@ namespace admaloch_inventory_system.Utilities
 {
     public static class FormUtils
     {
-        public static bool LocateAndSelectRowHelper(DataGridView dgv, string searchInput, int columnIndex = 1)
+        public static bool LocateAndSelectRowHelper(DataGridView dgv, string searchInput)
         {
             string searchTerm = searchInput.Trim().ToLower();
 
@@ -18,14 +18,14 @@ namespace admaloch_inventory_system.Utilities
                 return false;
             }
 
-            foreach (DataGridViewRow row in dgv.Rows)
+            if (Utils.SelectSearchedRow(dgv, searchTerm, 1))//search name field
             {
-                if (Utils.LocateSearchTerm(row, searchTerm))
-                {
-                    row.Selected = true;
-                    dgv.CurrentCell = row.Cells[columnIndex];
-                    return true;
-                }
+                return true;
+            }
+
+            if (Utils.SelectSearchedRow(dgv, searchTerm, 0))//search id if name doesn't find anything
+            {
+                return true;
             }
 
             MessageBox.Show("No matching item found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
