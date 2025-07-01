@@ -10,7 +10,7 @@ namespace admaloch_inventory_system.Utilities
     {
         public static bool LocateAndSelectRowHelper(DataGridView dgv, string searchInput)
         {
-            string searchTerm = searchInput.Trim().ToLower();
+            string searchTerm = searchInput.Trim();
 
             if (string.IsNullOrWhiteSpace(searchTerm))
             {

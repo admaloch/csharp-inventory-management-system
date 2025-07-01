@@ -17,8 +17,7 @@ namespace admaloch_inventory_system
 
         private void AddPart_Load(object sender, EventArgs e)
         {
-            saveBtn.Enabled = false;//disable save btn unless form validated
-            ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn, saveBtn);
+            ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn);
 
             // Attach shared listener to radio buttons
             inHouseBtn.CheckedChanged += RadioChanged;
@@ -46,17 +45,23 @@ namespace admaloch_inventory_system
             {
                 originLbl.Text = "Company";
             }
-            ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn, saveBtn);
+            ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn);
         }
 
 
         private void SharedInputChanged(object sender, EventArgs e)//connect inputs into shared listener
         {
-            ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn, saveBtn);
+            ValidationUtils.ValidatePartForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, partOriginTxt, inHouseBtn);
         }
 
         private void AddPartSaveBtn_Click(object sender, EventArgs e)
         {
+            bool isValidated = ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
+            if (!isValidated)
+            {
+                ValidationUtils.ValidationErrMsg(inventoryTxt, minTxt, maxTxt);
+                return;
+            }
             if (inHouseBtn.Checked)
             {
                 Inventory.AddPart(new Inhouse

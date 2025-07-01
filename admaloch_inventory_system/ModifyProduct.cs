@@ -33,9 +33,8 @@ namespace admaloch_inventory_system
 
         private void AddPart_Load(object sender, EventArgs e)
         {
-            saveBtn.Enabled = false;//disable save btn unless form validated
 			//initial validate -- will make necesary inputs red
-			ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, selectedProduct);
+			ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
 
             // Hook shared listener for input validation
             nameTxt.TextChanged += SharedInputChanged;
@@ -47,7 +46,7 @@ namespace admaloch_inventory_system
 
         private void SharedInputChanged(object sender, EventArgs e)
         {
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, selectedProduct);
+            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
         }
 
         private void ProductSearchBtn_Click(object sender, EventArgs e)
@@ -58,17 +57,21 @@ namespace admaloch_inventory_system
         private void addBtn_Click(object sender, EventArgs e)
         {
             FormUtils.AddAssociatedPartHelper(dgvParts, selectedProduct);
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, selectedProduct);
         }
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
             FormUtils.DeleteAssociatedPartsRowHelper(dgvAssociatedParts, selectedProduct);
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, selectedProduct);
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
+            bool isValidated = ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
+            if (!isValidated) 
+            {
+                ValidationUtils.ValidationErrMsg( inventoryTxt,  minTxt, maxTxt);
+                return;
+            }
             var updatedProduct = new Product
             {
                 ProductID = selectedProduct.ProductID,

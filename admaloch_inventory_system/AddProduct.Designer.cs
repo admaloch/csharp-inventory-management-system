@@ -69,7 +69,6 @@
             // saveBtn
             // 
             this.saveBtn.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.saveBtn.Enabled = false;
             this.saveBtn.Location = new System.Drawing.Point(1251, 939);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(114, 59);

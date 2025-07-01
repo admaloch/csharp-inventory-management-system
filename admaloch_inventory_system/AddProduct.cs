@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace admaloch_inventory_system
 {
     public partial class AddProduct : Form
-    {
+    {            
         private Product newProduct;
 
         public AddProduct()
@@ -27,10 +27,9 @@ namespace admaloch_inventory_system
             dgvParts.DataSource = Inventory.AllParts; //connect data to dvg
             dgvAssociatedParts.DataSource = newProduct.AssociatedParts;
 
-            saveBtn.Enabled = false; //disable save btn unless form validated
 
             //initial validate -- will make necesary inputs red
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, newProduct);
+            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
 
             nameTxt.TextChanged += SharedInputChanged; //add inuts to shared listener for validation
             inventoryTxt.TextChanged += SharedInputChanged;
@@ -43,7 +42,7 @@ namespace admaloch_inventory_system
 
         private void SharedInputChanged(object sender, EventArgs e)
         {
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, newProduct);
+            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
         }
 
         private void ProductSearchBtn_Click(object sender, EventArgs e)
@@ -54,17 +53,21 @@ namespace admaloch_inventory_system
         private void addBtn_Click(object sender, EventArgs e)
         {
             FormUtils.AddAssociatedPartHelper(dgvParts, newProduct);
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, newProduct);
         }
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
             FormUtils.DeleteAssociatedPartsRowHelper(dgvAssociatedParts, newProduct);
-            ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt, saveBtn, newProduct);
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
+            bool isValidated = ValidationUtils.ValidateProductForm(nameTxt, inventoryTxt, priceTxt, minTxt, maxTxt);
+            if (!isValidated)
+            {
+                ValidationUtils.ValidationErrMsg(inventoryTxt, minTxt, maxTxt);
+                return;
+            }
             // Update newProduct's properties from form inputs
             newProduct.Name = nameTxt.Text;
             newProduct.Price = decimal.Parse(priceTxt.Text);
