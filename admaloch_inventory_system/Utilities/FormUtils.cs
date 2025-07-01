@@ -42,6 +42,12 @@ namespace admaloch_inventory_system.Utilities
                     case ItemType.Part:
                         return Inventory.DeletePart(itemId);
                     case ItemType.Product:
+                        Product currentProduct = Inventory.LookupProduct(itemId);
+                        if(currentProduct.AssociatedParts.Count > 0)
+                        {
+                            MessageBox.Show("Product has associated parts", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return false;
+                        }
                         return Inventory.RemoveProduct(itemId);
                     default:
                         break;
