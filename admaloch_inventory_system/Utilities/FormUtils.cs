@@ -35,25 +35,33 @@ namespace admaloch_inventory_system.Utilities
         {
             if (Utils.IsRowSelected(dgv)) //check if a row is currently selected
             {
+                //check if user wants to go through with this
+                if(!Utils.YesorNoMessageHelper("Confirm Deletion", $"Are you sure you want to remove the {type}?"))
+                {
+                    return false;
+                }
+
                 int itemId = Utils.GrabDgvRowId(dgv);//grab row id val
 
-                switch (type)//determine method depending on ItemType
+                if (type == ItemType.Part)//for part
                 {
-                    case ItemType.Part:
-                        return Inventory.DeletePart(itemId);
-                    case ItemType.Product:
-                        Product currentProduct = Inventory.LookupProduct(itemId);
-                        if(currentProduct.AssociatedParts.Count > 0)
-                        {
-                            MessageBox.Show("Product has associated parts", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return false;
-                        }
-                        return Inventory.RemoveProduct(itemId);
-                    default:
-                        break;
+                    return Inventory.DeletePart(itemId);
                 }
-                MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                else if (type == ItemType.Product) //for product
+                {
+                    Product currentProduct = Inventory.LookupProduct(itemId);
+                    if (currentProduct.AssociatedParts.Count > 0)
+                    {
+                        MessageBox.Show("Product has associated parts", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+                    return Inventory.RemoveProduct(itemId);
+                }
+                else
+                {
+                    MessageBox.Show("Item failed to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
             }
             MessageBox.Show("No row selected. Please select a row to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return false;
@@ -61,6 +69,11 @@ namespace admaloch_inventory_system.Utilities
 
         public static bool DeleteAssociatedPartsRowHelper(DataGridView dgv, Product product )
         {
+            if (!Utils.YesorNoMessageHelper("Confirm Deletion", "Are you sure you want to remove the associated part?"))
+            {
+                return false;
+            }
+
             if (Utils.IsRowSelected(dgv))
             {
                 int itemId = Utils.GrabDgvRowId(dgv);

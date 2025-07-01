@@ -67,5 +67,24 @@ namespace admaloch_inventory_system.Utilities
             }
             return false;
         }
+
+        public static bool YesorNoMessageHelper(string title, string message)
+        {
+            DialogResult result = MessageBox.Show(
+                message,
+                title,
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
